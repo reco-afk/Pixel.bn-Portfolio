@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Designer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #EFF4F6;
+    --bg-white: #FFFFFF;
+    --ink: #12232E;
+    --muted: #5B6B74;
+    --accent: #FF6B47;
+    --accent-soft: #FFE4DB;
+    --teal: #1B8A7E;
+    --border: rgba(18,35,46,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(239,244,246,0.85);
+    backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s ease;
+  }
+
+  nav.scrolled { box-shadow: 0 4px 20px rgba(18,35,46,0.06); }
+
+  .nav-logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.25s ease;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--bg-white);
+    border: none;
+    padding: 12px 26px;
+    border-radius: 100px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    padding: 140px 48px 80px;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    z-index: -1;
+    opacity: 0.55;
+  }
+
+  .blob-1 {
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, var(--accent-soft), transparent 70%);
+    top: -120px; right: -60px;
+    animation: blobFloat 12s ease-in-out infinite;
+  }
+
+  .blob-2 {
+    width: 380px; height: 380px;
+    background: radial-gradient(circle, #D6EFEC, transparent 70%);
+    bottom: -140px; left: -100px;
+    animation: blobFloat 14s ease-in-out infinite 2s;
+  }
+
+  .blob-3 {
+    width: 260px; height: 260px;
+    background: radial-gradient(circle, #FFF3D6, transparent 70%);
+    top: 30%; left: 45%;
+    animation: blobFloat 10s ease-in-out infinite 1s;
+  }
+
+  .hero-dots {
+    position: absolute;
+    top: 60px; right: 6%;
+    width: 140px;
+    height: 140px;
+    background-image: radial-gradient(var(--border) 2px, transparent 2px);
+    background-size: 18px 18px;
+    z-index: -1;
+    opacity: 0.7;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.1s forwards;
+  }
+
+  .hero-badge .dot {
+    width: 8px; height: 8px;
+    background: #2ECC71;
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+
+  .hero-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2.6rem, 5.2vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.25s forwards;
+  }
+
+  .hero-title .highlight {
+    position: relative;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 460px;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.55s forwards;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 8px 24px rgba(255,107,71,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(255,107,71,0.4);
+  }
+
+  .btn-ghost {
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 16px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.3s ease;
+  }
+
+  .btn-ghost:hover { gap: 14px; }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+
+  .visual-card {
+    background: var(--bg-white);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(18,35,46,0.1);
+    position: relative;
+    z-index: 2;
+  }
+
+  .visual-browser-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .visual-browser-bar span {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .visual-line {
+    height: 12px;
+    background: var(--bg);
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+
+  .visual-line.short { width: 60%; }
+  .visual-line.accent { background: var(--accent-soft); width: 40%; height: 32px; border-radius: 8px; margin-top: 20px; }
+
+  .visual-block {
+    height: 90px;
+    background: linear-gradient(135deg, var(--accent-soft), #D6EFEC);
+    border-radius: 14px;
+    margin-bottom: 20px;
+  }
+
+  .floating-chip {
+    position: absolute;
+    background: var(--bg-white);
+    border-radius: 16px;
+    padding: 14px 20px;
+    box-shadow: 0 12px 30px rgba(18,35,46,0.12);
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 3;
+  }
+
+  .chip-1 {
+    top: -20px; right: -20px;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .chip-2 {
+    bottom: 20px; left: -30px;
+    animation: float 4s ease-in-out infinite 1.5s;
+  }
+
+  .chip-dot {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    background: var(--teal);
+  }
+
+  .chip-1 .chip-dot { background: var(--accent); }
+
+  /* MARQUEE */
+  .marquee-section {
+    padding: 24px 0;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 50px;
+    animation: marquee 22s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-item {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
+
+  .marquee-item::after { content: '✦'; color: var(--accent); }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 48px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .section-title .highlight { color: var(--accent); }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+  }
+
+  .about-text {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+
+  .about-text p + p { margin-top: 18px; }
+
+  .value-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .value-item {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    background: var(--bg-white);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .value-item:hover {
+    transform: translateX(6px);
+    box-shadow: 0 12px 30px rgba(18,35,46,0.08);
+  }
+
+  .value-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .value-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 1rem;
+  }
+
+  .value-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* WORK PREVIEWS */
+  .work-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 50px;
+  }
+
+  .work-preview-card {
+    background: var(--bg-white);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .work-preview-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 44px rgba(18,35,46,0.12);
+  }
+
+  .preview-browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    background: #E9EEF0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .preview-browser-bar span {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #ccc;
+  }
+
+  .preview-browser-bar span:nth-child(1) { background: #FF5F57; }
+  .preview-browser-bar span:nth-child(2) { background: #FEBC2E; }
+  .preview-browser-bar span:nth-child(3) { background: #28C840; }
+
+  .preview-url {
+    margin-left: 12px;
+    background: var(--bg-white);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .preview-frame {
+    width: 100%;
+    height: 340px;
+    border: none;
+    display: block;
+    background: white;
+  }
+
+  .preview-footer {
+    padding: 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .preview-link {
+    flex-shrink: 0;
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    padding-top: 4px;
+    transition: transform 0.25s ease;
+    display: inline-block;
+  }
+
+  .preview-link:hover { transform: translateX(4px); }
+
+  @media (max-width: 900px) {
+    .work-preview-grid { grid-template-columns: 1fr; }
+    .preview-frame { height: 280px; }
+    .preview-footer { flex-direction: column; }
+  }
+
+  /* SERVICES */
+  .services-section { background: var(--bg-white); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .service-card {
+    background: var(--bg);
+    border-radius: 20px;
+    padding: 36px 28px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 36px rgba(18,35,46,0.1);
+  }
+
+  .service-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--bg-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+  }
+
+  .service-card:nth-child(1) .service-icon { background: var(--accent-soft); }
+  .service-card:nth-child(2) .service-icon { background: #D6EFEC; }
+  .service-card:nth-child(3) .service-icon { background: #FFF3D6; }
+
+  .service-title {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* PROCESS */
+  .process-timeline {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .process-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    align-items: center;
+  }
+
+  .process-row:last-child { border-bottom: 1px solid var(--border); }
+
+  .process-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .process-row-title {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+
+  .process-row-desc {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 600px;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--ink);
+    border-radius: 32px;
+    margin: 0 48px 100px;
+    padding: 90px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: var(--accent);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.25;
+    top: -100px; right: -100px;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .cta-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: white;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .cta-title .highlight { color: var(--accent); }
+
+  .cta-text {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.25s ease;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes blobFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -30px) scale(1.08); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { order: -1; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    .hero { padding: 120px 24px 60px; }
+    .cta-section { margin: 0 24px 70px; padding: 60px 28px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .process-row { grid-template-columns: 50px 1fr; gap: 20px; }
+    .hero-blob { opacity: 0.4; }
+    .blob-1 { width: 280px; height: 280px; }
+    .blob-2 { width: 260px; height: 260px; }
+    .blob-3 { width: 180px; height: 180px; }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    .nav-logo { font-size: 1rem; }
+    .nav-cta { padding: 10px 18px; font-size: 0.8rem; }
+
+    .hero { padding: 110px 20px 50px; min-height: auto; }
+    .hero-badge { font-size: 0.75rem; padding: 7px 14px; margin-bottom: 20px; }
+    .hero-title { font-size: 2rem; margin-bottom: 18px; }
+    .hero-subtitle { font-size: 0.95rem; margin-bottom: 28px; }
+    .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+    .btn-primary { text-align: center; padding: 15px 24px; width: 100%; }
+    .btn-ghost { justify-content: center; padding: 8px; }
+
+    .hero-dots { display: none; }
+    .visual-card { padding: 22px; border-radius: 18px; }
+    .floating-chip { padding: 10px 14px; font-size: 0.75rem; }
+    .chip-1 { top: -14px; right: -10px; }
+    .chip-2 { bottom: 10px; left: -14px; }
+
+    section { padding: 56px 20px; }
+    .section-title { font-size: 1.7rem; }
+    .section-label { font-size: 0.72rem; }
+
+    .value-item { padding: 18px; gap: 14px; }
+    .value-icon { width: 38px; height: 38px; font-size: 1.1rem; }
+
+    .service-card { padding: 28px 22px; }
+
+    .process-row { grid-template-columns: 36px 1fr; gap: 14px; padding: 24px 0; }
+    .process-num { font-size: 1.2rem; }
+    .process-row-title { font-size: 1rem; }
+    .process-row-desc { font-size: 0.85rem; }
+
+    .cta-section { margin: 0 16px 50px; padding: 48px 22px; border-radius: 22px; }
+    .cta-title { font-size: 1.6rem; }
+    .cta-text { font-size: 0.9rem; margin-bottom: 28px; }
+    .cta-section .btn-primary { display: block; word-break: break-word; }
+
+    .marquee-item { font-size: 0.72rem; }
+
+    footer { padding: 28px 20px; }
+  }
+
+  @media (max-width: 380px) {
+    .hero-title { font-size: 1.7rem; }
+    .cta-title { font-size: 1.4rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">pixel<span>.bn</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+  </ul>
+  <a href="https://wa.me/6737156809" target="_blank" class="nav-cta">Let's Talk</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blob blob-1"></div>
+  <div class="hero-blob blob-2"></div>
+  <div class="hero-blob blob-3"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Available for new projects
+      </div>
+      <h1 class="hero-title">
+        Websites that help your <span class="highlight">business grow</span>
+      </h1>
+      <p class="hero-subtitle">
+        I build clean, fast, easy-to-use websites for small businesses. 
+        No jargon, no unnecessary complexity — just a site that works and looks good doing it.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/6737156809" target="_blank" class="btn-primary">Chat on WhatsApp</a>
+        <a href="#services" class="btn-ghost">See what I offer →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="visual-card">
+        <div class="visual-browser-bar">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="visual-block"></div>
+        <div class="visual-line"></div>
+        <div class="visual-line short"></div>
+        <div class="visual-line accent"></div>
+      </div>
+      <div class="floating-chip chip-1">
+        <span class="chip-dot"></span>
+        Fast & Responsive
+      </div>
+      <div class="floating-chip chip-2">
+        <span class="chip-dot"></span>
+        Mobile Friendly
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Web Design</span>
+    <span class="marquee-item">Landing Pages</span>
+    <span class="marquee-item">Small Business Sites</span>
+    <span class="marquee-item">Responsive Design</span>
+    <span class="marquee-item">Fast Delivery</span>
+    <span class="marquee-item">Web Design</span>
+    <span class="marquee-item">Landing Pages</span>
+    <span class="marquee-item">Small Business Sites</span>
+    <span class="marquee-item">Responsive Design</span>
+    <span class="marquee-item">Fast Delivery</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <p class="section-label reveal">About Me</p>
+      <h2 class="section-title reveal reveal-delay-1">
+        Just getting started, <span class="highlight">fully committed</span>
+      </h2>
+      <div class="about-text reveal reveal-delay-2">
+        <p>
+          I'm a web designer building modern websites for small businesses. 
+          I'm new to freelancing, but I take every project seriously and 
+          work closely with you to get it right.
+        </p>
+        <p>
+          I keep pricing fair and communication simple. You'll always know 
+          what's happening with your project, and I won't stop until you're happy with it.
+        </p>
+      </div>
+    </div>
+    <div class="value-list reveal reveal-delay-3">
+      <div class="value-item">
+        <div class="value-icon">💬</div>
+        <div>
+          <div class="value-title">Clear Communication</div>
+          <div class="value-desc">You'll always know where your project stands, no confusing updates.</div>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">⚡</div>
+        <div>
+          <div class="value-title">Fast Turnaround</div>
+          <div class="value-desc">Small business websites don't need to take months. I move quickly.</div>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">💰</div>
+        <div>
+          <div class="value-title">Fair Pricing</div>
+          <div class="value-desc">Honest rates that make sense for a small business budget.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div class="services-section" id="services">
+  <section>
+    <p class="section-label reveal">What I Offer</p>
+    <h2 class="section-title reveal reveal-delay-1">
+      Simple services, <span class="highlight">real results</span>
+    </h2>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">🖥️</div>
+        <h3 class="service-title">Website Design</h3>
+        <p class="service-desc">A clean, professional website built around your business and your customers.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">📱</div>
+        <h3 class="service-title">Mobile Friendly</h3>
+        <p class="service-desc">Your site will look and work great on phones, tablets, and desktops alike.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">🚀</div>
+        <h3 class="service-title">Landing Pages</h3>
+        <p class="service-desc">A focused, single page built to get visitors to take action, fast.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- WORK / SAMPLES -->
+<section id="work">
+  <p class="section-label reveal">Sample Work</p>
+  <h2 class="section-title reveal reveal-delay-1">
+    See what I can <span class="highlight">build for you</span>
+  </h2>
+  <div class="work-preview-grid">
+    <div class="work-preview-card reveal">
+      <div class="preview-browser-bar">
+        <span></span><span></span><span></span>
+        <div class="preview-url">cafe-demo.html</div>
+      </div>
+      <iframe src="cafe-demo.html" class="preview-frame" loading="lazy"></iframe>
+      <div class="preview-footer">
+        <div>
+          <h3 class="service-title">Café Website</h3>
+          <p class="service-desc">Warm, simple site for a café — menu, featured items, hours, and location.</p>
+        </div>
+        <a href="cafe-demo.html" target="_blank" class="preview-link">Open Full ↗</a>
+      </div>
+    </div>
+    <div class="work-preview-card reveal reveal-delay-1">
+      <div class="preview-browser-bar">
+        <span></span><span></span><span></span>
+        <div class="preview-url">retail-demo.html</div>
+      </div>
+      <iframe src="retail-demo.html" class="preview-frame" loading="lazy"></iframe>
+      <div class="preview-footer">
+        <div>
+          <h3 class="service-title">Retail Shop Website</h3>
+          <p class="service-desc">Clean product showcase — categories, product grid, and easy contact.</p>
+        </div>
+        <a href="retail-demo.html" target="_blank" class="preview-link">Open Full ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <p class="section-label reveal">How It Works</p>
+
+  <h2 class="section-title reveal reveal-delay-1">
+    Simple <span class="highlight">3-step process</span>
+  </h2>
+  <div class="process-timeline">
+    <div class="process-row reveal">
+      <div class="process-num">01</div>
+      <div>
+        <div class="process-row-title">Tell me about your business</div>
+        <div class="process-row-desc">A quick chat about what you need, your style, and your goals.</div>
+      </div>
+    </div>
+    <div class="process-row reveal reveal-delay-1">
+      <div class="process-num">02</div>
+      <div>
+        <div class="process-row-title">I design and build your site</div>
+        <div class="process-row-desc">You'll see progress along the way and can request changes anytime.</div>
+      </div>
+    </div>
+    <div class="process-row reveal reveal-delay-2">
+      <div class="process-num">03</div>
+      <div>
+        <div class="process-row-title">Your website goes live</div>
+        <div class="process-row-desc">I handle getting it online so you can focus on running your business.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <div class="cta-inner">
+    <p class="section-label reveal" style="color: var(--accent);">Get In Touch</p>
+    <h2 class="cta-title reveal reveal-delay-1">
+      Let's build <span class="highlight">your website</span>
+    </h2>
+    <p class="cta-text reveal reveal-delay-2">
+      Send me a message and let's talk about what your business needs. 
+      Free quote, no pressure.
+    </p>
+    <a href="mailto:safwanarif1102009@gmail.com" class="btn-primary reveal reveal-delay-3">safwanarif1102009@gmail.com</a>
+    <p class="cta-text reveal reveal-delay-3" style="margin-top: 24px; margin-bottom: 0;">
+      Or chat on WhatsApp: <a href="https://wa.me/6737156809" target="_blank" style="color: white; font-weight: 700; text-decoration: underline;">+673 715 6809</a>
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-copy">© 2026 — Pixel.bn</p>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
