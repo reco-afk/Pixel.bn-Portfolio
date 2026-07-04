@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nest Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Poppins',sans-serif;background:#F3F2E7;color:#1f2a1f;overflow-x:hidden;}
+  .blob{position:fixed;border-radius:50%;filter:blur(90px);z-index:-1;opacity:.4;}
+  .blob-a{width:320px;height:320px;background:#B9CDB4;top:-80px;right:-80px;animation:drift 15s ease-in-out infinite;}
+  .blob-b{width:280px;height:280px;background:#DCE8D8;bottom:5%;left:-100px;animation:drift 17s ease-in-out infinite 2s;}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-25px,25px) scale(1.08);}}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:20px 6%;position:sticky;top:0;background:rgba(243,242,231,.85);backdrop-filter:blur(8px);z-index:40;transition:box-shadow .3s ease;}
+  nav.scrolled{box-shadow:0 4px 16px rgba(0,0,0,.06);}
+  .logo{font-weight:700;font-size:1.1rem;letter-spacing:.05em;}
+  nav a{margin-left:24px;text-decoration:none;color:#1f2a1f;font-size:.85rem;font-weight:500;position:relative;}
+  nav a:not(.btn)::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:2px;background:#2E4A32;transition:width .3s ease;}
+  nav a:not(.btn):hover::after{width:100%;}
+  .btn{background:#2E4A32;color:#fff;padding:10px 22px;border-radius:100px;text-decoration:none;font-size:.85rem;font-weight:600;transition:all .3s ease;display:inline-block;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(46,74,50,.3);}
+  .hero{text-align:center;padding:60px 6% 40px;position:relative;}
+  .hero h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:600;line-height:1.2;opacity:0;animation:fadeUp .8s ease .2s forwards;}
+  .hero p{margin-top:14px;color:#5a6b5a;opacity:0;animation:fadeUp .8s ease .4s forwards;}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+  section{padding:50px 6%;max-width:1100px;margin:0 auto;}
+  h2{font-size:1.7rem;font-weight:600;margin-bottom:26px;}
+  .fade{opacity:0;transform:translateY(30px);transition:.7s ease;}
+  .fade.show{opacity:1;transform:translateY(0);}
+  .cat-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;}
+  .cat-pill{background:#fff;border:1px solid #ddd;padding:8px 18px;border-radius:100px;font-size:.85rem;cursor:pointer;transition:.25s ease;}
+  .cat-pill:hover{border-color:#2E4A32;}
+  .cat-pill.active{background:#2E4A32;color:#fff;border-color:#2E4A32;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .card{background:#fff;border-radius:16px;overflow:hidden;transition:transform .35s ease,box-shadow .35s ease;}
+  .card:hover{transform:translateY(-8px);box-shadow:0 16px 32px rgba(0,0,0,.1);}
+  .card-img{height:150px;background:linear-gradient(135deg,#DCE8D8,#B9CDB4);transition:transform .5s ease;}
+  .card:hover .card-img{transform:scale(1.08);}
+  .card-body{padding:14px 16px;}
+  .card-body .name{font-weight:600;font-size:.9rem;}
+  .card-body .price{color:#2E4A32;font-weight:700;margin-top:4px;}
+  .about{background:#fff;border-radius:20px;padding:36px;text-align:center;transition:transform .3s ease,box-shadow .3s ease;}
+  .about:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.08);}
+  .location{background:#EDE9D8;border-radius:20px;padding:30px;text-align:center;transition:box-shadow .3s ease;}
+  .location:hover{box-shadow:0 16px 32px rgba(0,0,0,.06);}
+  .whatsapp-btn{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;padding:14px 22px;border-radius:100px;text-decoration:none;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.2);display:flex;align-items:center;gap:8px;transition:transform .3s ease;z-index:50;animation:pulse 2.5s ease infinite;}
+  .whatsapp-btn:hover{transform:translateY(-3px) scale(1.05);animation:none;}
+  @keyframes pulse{0%,100%{box-shadow:0 8px 20px rgba(37,211,102,.3);}50%{box-shadow:0 8px 28px rgba(37,211,102,.6);}}
+  footer{text-align:center;padding:30px;color:#777;font-size:.85rem;}
+  @media(max-width:700px){.grid{grid-template-columns:1fr 1fr;}nav a{margin-left:12px;font-size:.75rem;}}
+</style>
+</head>
+<body>
+<div class="blob blob-a"></div>
+<div class="blob blob-b"></div>
+
+<nav>
+  <div class="logo">NEST STUDIO</div>
+  <div>
+    <a href="#shop">Shop</a><a href="#about">About</a>
+    <a href="https://wa.me/6737156809" target="_blank" class="btn">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Simple pieces.<br>Thoughtfully made.</h1>
+  <p>Everyday essentials for your home and wardrobe.</p>
+</section>
+
+<section id="shop">
+  <h2 class="fade">Categories</h2>
+  <div class="cat-row fade">
+    <span class="cat-pill active" data-cat="all">All</span>
+    <span class="cat-pill" data-cat="clothing">Clothing</span>
+    <span class="cat-pill" data-cat="accessories">Accessories</span>
+    <span class="cat-pill" data-cat="home">Home Goods</span>
+  </div>
+  <h2 class="fade">Products</h2>
+  <div class="grid" id="productGrid">
+    <div class="card fade" data-cat="clothing"><div class="card-img"></div><div class="card-body"><div class="name">Linen Shirt</div><div class="price">$28</div></div></div>
+    <div class="card fade" data-cat="accessories"><div class="card-img"></div><div class="card-body"><div class="name">Tote Bag</div><div class="price">$15</div></div></div>
+    <div class="card fade" data-cat="home"><div class="card-img"></div><div class="card-body"><div class="name">Ceramic Mug</div><div class="price">$12</div></div></div>
+    <div class="card fade" data-cat="clothing"><div class="card-img"></div><div class="card-body"><div class="name">Wool Scarf</div><div class="price">$22</div></div></div>
+    <div class="card fade" data-cat="accessories"><div class="card-img"></div><div class="card-body"><div class="name">Cotton Cap</div><div class="price">$18</div></div></div>
+    <div class="card fade" data-cat="home"><div class="card-img"></div><div class="card-body"><div class="name">Woven Basket</div><div class="price">$20</div></div></div>
+    <div class="card fade" data-cat="clothing"><div class="card-img"></div><div class="card-body"><div class="name">Denim Jacket</div><div class="price">$45</div></div></div>
+    <div class="card fade" data-cat="accessories"><div class="card-img"></div><div class="card-body"><div class="name">Leather Belt</div><div class="price">$16</div></div></div>
+    <div class="card fade" data-cat="home"><div class="card-img"></div><div class="card-body"><div class="name">Scented Candle</div><div class="price">$14</div></div></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about fade">
+    <h2>About Nest Studio</h2>
+    <p>We make simple, durable goods for everyday life. Every piece is chosen with care, made to last, and designed to fit naturally into your routine.</p>
+  </div>
+</section>
+
+<section>
+  <div class="location fade">
+    <h2>Visit Our Store</h2>
+    <p>456 Market Lane, Bandar Seri Begawan<br>Open Daily: 10:00am – 8:00pm</p>
+  </div>
+</section>
+
+<a href="https://wa.me/6737156809" target="_blank" class="whatsapp-btn">💬 Enquire on WhatsApp</a>
+
+<footer>© 2026 Nest Studio — Sample site by Pixel.bn</footer>
+
+<script>
+  const fades = document.querySelectorAll('.fade');
+  const obs = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target);}}),{threshold:.15});
+  fades.forEach(f=>obs.observe(f));
+
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+  const pills = document.querySelectorAll('.cat-pill');
+  const cards = document.querySelectorAll('#productGrid .card');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const cat = pill.dataset.cat;
+      cards.forEach(card => {
+        if (cat === 'all' || card.dataset.cat === cat) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
