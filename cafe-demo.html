@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Café Aroma</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Poppins',sans-serif;background:#FBF1DE;color:#1a1a1a;overflow-x:hidden;}
+  .blob{position:fixed;border-radius:50%;filter:blur(80px);z-index:-1;opacity:.5;}
+  .blob-a{width:340px;height:340px;background:#F4A261;top:-100px;left:-80px;animation:drift 14s ease-in-out infinite;}
+  .blob-b{width:300px;height:300px;background:#E9C46A;bottom:10%;right:-100px;animation:drift 16s ease-in-out infinite 2s;}
+  .blob-c{width:220px;height:220px;background:#E76F51;top:40%;left:60%;animation:drift 12s ease-in-out infinite 1s;opacity:.3;}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(30px,-20px) scale(1.1);}}
+  .tag{position:absolute;background:#fff;border:1.5px solid #1a1a1a;padding:6px 14px;border-radius:8px;font-size:.75rem;font-weight:600;}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:20px 6%;position:sticky;top:0;background:rgba(251,241,222,.85);backdrop-filter:blur(8px);z-index:40;transition:box-shadow .3s ease;}
+  nav.scrolled{box-shadow:0 4px 16px rgba(0,0,0,.06);}
+  .logo{font-weight:800;font-size:1.2rem;}
+  nav a{margin-left:24px;text-decoration:none;color:#1a1a1a;font-weight:600;font-size:.9rem;position:relative;}
+  nav a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:2px;background:#E76F51;transition:width .3s ease;}
+  nav a:hover::after{width:100%;}
+  .hero{position:relative;text-align:center;padding:60px 6% 80px;overflow:hidden;}
+  .hero h1{font-size:clamp(2.2rem,7vw,4rem);font-weight:800;opacity:0;animation:fadeUp .8s ease .2s forwards;}
+  .hero p{margin-top:16px;color:#555;opacity:0;animation:fadeUp .8s ease .4s forwards;}
+  .t1{top:10%;left:4%;transform:rotate(-8deg);animation:floaty 5s ease-in-out infinite;}
+  .t2{top:8%;right:5%;transform:rotate(6deg);animation:floaty 5s ease-in-out infinite .5s;}
+  .t3{bottom:12%;left:8%;transform:rotate(-5deg);animation:floaty 5s ease-in-out infinite 1s;}
+  .t4{bottom:10%;right:6%;transform:rotate(5deg);animation:floaty 5s ease-in-out infinite 1.5s;}
+  @keyframes floaty{0%,100%{transform:translateY(0) rotate(var(--r,0deg));}50%{transform:translateY(-8px) rotate(var(--r,0deg));}}
+  .tag{transition:transform .3s ease;}
+  .tag:hover{transform:scale(1.1) !important;}
+  .fade{opacity:0;transform:translateY(30px);transition:.7s ease;}
+  .fade.show{opacity:1;transform:translateY(0);}
+  section{padding:60px 6%;max-width:1100px;margin:0 auto;}
+  h2{font-size:2rem;font-weight:800;margin-bottom:30px;text-align:center;}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .menu-item{background:#fff;border:1.5px solid #1a1a1a;border-radius:14px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;transition:all .3s ease;position:relative;overflow:hidden;}
+  .menu-item::before{content:'';position:absolute;inset:0;background:#FFE8CC;transform:scaleX(0);transform-origin:left;transition:transform .35s ease;z-index:0;}
+  .menu-item:hover::before{transform:scaleX(1);}
+  .menu-item span{position:relative;z-index:1;}
+  .menu-item:hover{transform:translateY(-4px) translateX(2px);box-shadow:0 10px 24px rgba(0,0,0,.1);}
+  .menu-item span:last-child{font-weight:700;}
+  .featured{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .featured div{background:linear-gradient(135deg,#e8c9a0,#d9a066);height:180px;border-radius:16px;border:1.5px solid #1a1a1a;transition:transform .4s ease,box-shadow .4s ease;}
+  .featured div:hover{transform:scale(1.05) rotate(-1deg);box-shadow:0 16px 32px rgba(0,0,0,.15);}
+  .about{background:#fff;border-radius:20px;border:1.5px solid #1a1a1a;padding:40px;text-align:center;transition:transform .3s ease,box-shadow .3s ease;}
+  .about:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.1);}
+  .location{display:grid;grid-template-columns:1fr 1fr;gap:24px;background:#FBEBC9;border-radius:20px;padding:30px;transition:box-shadow .3s ease;}
+  .location:hover{box-shadow:0 16px 32px rgba(0,0,0,.08);}
+  .map-block{background:#eee;border-radius:14px;min-height:220px;display:flex;align-items:center;justify-content:center;color:#999;font-size:.85rem;transition:background .3s ease;}
+  .map-block:hover{background:#e2e2e2;}
+  .whatsapp-btn{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;padding:14px 22px;border-radius:100px;text-decoration:none;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.2);display:flex;align-items:center;gap:8px;transition:transform .3s ease;z-index:50;animation:pulse 2.5s ease infinite;}
+  .whatsapp-btn:hover{transform:translateY(-3px) scale(1.05);animation:none;}
+  @keyframes pulse{0%,100%{box-shadow:0 8px 20px rgba(37,211,102,.3);}50%{box-shadow:0 8px 28px rgba(37,211,102,.6);}}
+  footer{text-align:center;padding:30px;color:#777;font-size:.85rem;}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+  @media(max-width:700px){
+    .menu-grid,.featured,.location{grid-template-columns:1fr;}
+    .tag{display:none;}
+    nav a{margin-left:14px;font-size:.8rem;}
+  }
+</style>
+</head>
+<body>
+<div class="blob blob-a"></div>
+<div class="blob blob-b"></div>
+<div class="blob blob-c"></div>
+
+<nav>
+  <div class="logo">Café Aroma</div>
+  <div><a href="#menu">Menu</a><a href="#about">About</a><a href="#location">Visit</a></div>
+</nav>
+
+<section class="hero">
+  <span class="tag t1">☕ Fresh Daily</span>
+  <span class="tag t2">🥐 Baked Goods</span>
+  <h1>Café Aroma</h1>
+  <p>Good coffee, good company, good mornings.</p>
+  <span class="tag t3">🍰 Desserts</span>
+  <span class="tag t4">🥪 Sandwiches</span>
+</section>
+
+<section id="menu">
+  <h2 class="fade">Menu</h2>
+  <div class="menu-grid">
+    <div class="menu-item fade"><span>Cappuccino</span><span>$3.50</span></div>
+    <div class="menu-item fade"><span>Iced Latte</span><span>$4.00</span></div>
+    <div class="menu-item fade"><span>Croissant</span><span>$2.80</span></div>
+    <div class="menu-item fade"><span>Avocado Toast</span><span>$6.50</span></div>
+    <div class="menu-item fade"><span>Cheesecake Slice</span><span>$4.50</span></div>
+    <div class="menu-item fade"><span>Chicken Sandwich</span><span>$7.00</span></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="fade">Featured</h2>
+  <div class="featured">
+    <div class="fade"></div><div class="fade"></div><div class="fade"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about fade">
+    <h2>Our Story</h2>
+    <p>Café Aroma started as a small neighborhood spot with one goal — serve honest coffee and warm food in a place that feels like home. Every cup is made fresh, every day.</p>
+  </div>
+</section>
+
+<section id="location">
+  <h2 class="fade">Find Us</h2>
+  <div class="location fade">
+    <div class="map-block">Map Placeholder</div>
+    <div>
+      <h3>Opening Hours</h3>
+      <p>Mon–Fri: 7:30am – 6:00pm<br>Sat–Sun: 8:00am – 5:00pm</p>
+      <h3 style="margin-top:20px;">Address</h3>
+      <p>123 Main Street, Bandar Seri Begawan</p>
+    </div>
+  </div>
+</section>
+
+<a href="https://wa.me/6737156809" target="_blank" class="whatsapp-btn">💬 WhatsApp Us</a>
+
+<footer>© 2026 Café Aroma — Sample site by Pixel.bn</footer>
+
+<script>
+  const fades = document.querySelectorAll('.fade');
+  const obs = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target);}}),{threshold:.15});
+  fades.forEach(f=>obs.observe(f));
+
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+</script>
+</body>
+</html>
