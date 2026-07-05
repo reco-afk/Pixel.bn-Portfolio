@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thrift Boiii</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;background:#0D0D0D;color:#fff;overflow-x:hidden;}
+
+  /* ====================================================
+     PRODUCT LIST — EDIT HERE TO ADD/REMOVE ITEMS
+     Just copy one block and change the details.
+     This is the ONLY part you need to touch to update stock.
+  ==================================================== */
+
+  nav{display:flex;justify-content:space-between;align-items:center;padding:22px 6%;position:sticky;top:0;background:rgba(13,13,13,.9);backdrop-filter:blur(10px);z-index:50;border-bottom:1px solid #262626;}
+  .logo{font-family:'Anton',sans-serif;font-size:1.4rem;letter-spacing:1px;color:#fff;}
+  .logo span{color:#C97A2B;}
+  nav a{color:#999;text-decoration:none;margin-left:28px;font-size:.88rem;font-weight:500;}
+  nav a:hover{color:#fff;}
+  .nav-btn{background:#C97A2B;color:#0D0D0D;padding:10px 22px;border-radius:6px;font-weight:700;font-size:.85rem;text-decoration:none;}
+
+  .hero{text-align:center;padding:120px 6% 90px;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle, rgba(201,122,43,.25) 0%, transparent 70%);top:-250px;left:50%;transform:translateX(-50%);}
+  .hero-logo{width:120px;height:120px;border-radius:50%;margin:0 auto 30px;position:relative;box-shadow:0 0 0 3px #C97A2B, 0 10px 40px rgba(201,122,43,.35);display:block;}
+  .eyebrow{display:inline-block;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:#C97A2B;font-weight:700;margin-bottom:26px;position:relative;}
+  .hero h1{font-family:'Anton',sans-serif;font-size:clamp(2.6rem,7vw,5.2rem);line-height:1.05;letter-spacing:.5px;margin-bottom:24px;position:relative;}
+  .hero h1 span{color:#C97A2B;}
+  .hero p{color:#aaa;max-width:520px;margin:0 auto 40px;font-size:1.05rem;line-height:1.7;position:relative;}
+  .hero-actions{display:flex;gap:16px;justify-content:center;position:relative;flex-wrap:wrap;}
+  .btn-primary{background:#C97A2B;color:#0D0D0D;padding:16px 34px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem;transition:transform .25s ease;}
+  .btn-primary:hover{transform:translateY(-3px);}
+  .btn-outline{border:1.5px solid #333;color:#fff;padding:16px 34px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem;transition:all .25s ease;}
+  .btn-outline:hover{border-color:#C97A2B;color:#C97A2B;}
+
+  section{padding:80px 6%;max-width:1200px;margin:0 auto;}
+  .section-head{text-align:center;margin-bottom:56px;}
+  .section-eyebrow{font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:#C97A2B;font-weight:700;margin-bottom:14px;}
+  .section-title{font-family:'Anton',sans-serif;font-size:clamp(1.9rem,4vw,2.8rem);letter-spacing:.5px;}
+
+  /* CATEGORY PILLS */
+  .cat-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:50px;}
+  .cat-pill{background:#1A1A1A;border:1px solid #2A2A2A;padding:10px 22px;border-radius:100px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.25s ease;color:#ccc;}
+  .cat-pill:hover{border-color:#C97A2B;color:#fff;}
+  .cat-pill.active{background:#C97A2B;color:#0D0D0D;border-color:#C97A2B;}
+
+  /* PRODUCT GRID */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .card{background:#161616;border:1px solid #262626;border-radius:14px;overflow:hidden;transition:transform .3s ease,border-color .3s ease;}
+  .card:hover{transform:translateY(-6px);border-color:#C97A2B;}
+  .card-img{height:190px;background:linear-gradient(135deg,#2A2A2A,#1A1A1A);display:flex;align-items:center;justify-content:center;font-size:2.2rem;}
+  .card-body{padding:16px 18px;}
+  .card-tag{font-size:.68rem;letter-spacing:1px;text-transform:uppercase;color:#C97A2B;font-weight:700;margin-bottom:6px;}
+  .card-name{font-weight:700;font-size:.95rem;margin-bottom:6px;}
+  .card-price{color:#C97A2B;font-weight:800;font-size:1.05rem;}
+  .card-size{color:#777;font-size:.78rem;margin-top:4px;}
+
+  /* STATS BAR */
+  .stats-bar{background:#141414;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:60px 6%;}
+  .stats-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;text-align:center;}
+  .stat-num{font-family:'Anton',sans-serif;font-size:3rem;color:#C97A2B;}
+  .stat-label{color:#999;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;margin-top:8px;}
+
+  /* ABOUT */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .about-text p{color:#aaa;line-height:1.8;font-size:1rem;}
+  .about-text p+p{margin-top:16px;}
+  .about-visual{background:#161616;border:1px solid #262626;border-radius:16px;height:320px;display:flex;align-items:center;justify-content:center;font-size:4rem;}
+
+  /* HOW TO UPDATE — dev note panel shown as feature, styled as a benefit */
+  .update-panel{background:linear-gradient(135deg,#1A1A1A,#141414);border:1px solid #2A2A2A;border-radius:18px;padding:44px;text-align:center;}
+  .update-panel h3{font-family:'Anton',sans-serif;font-size:1.6rem;margin-bottom:14px;}
+  .update-panel p{color:#999;max-width:500px;margin:0 auto;line-height:1.7;}
+
+  /* LOCATION / CONTACT */
+  .contact-box{background:#161616;border:1px solid #262626;border-radius:16px;padding:44px;text-align:center;}
+  .contact-box h3{font-family:'Anton',sans-serif;font-size:1.5rem;margin-bottom:10px;}
+  .contact-box p{color:#999;margin-bottom:26px;}
+
+  .whatsapp-btn{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;padding:14px 24px;border-radius:100px;text-decoration:none;font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 10px 26px rgba(0,0,0,.4);z-index:60;transition:transform .3s ease;}
+  .whatsapp-btn:hover{transform:translateY(-3px);}
+
+  footer{text-align:center;padding:36px;color:#666;font-size:.85rem;border-top:1px solid #262626;}
+
+  .fade{opacity:0;transform:translateY(24px);transition:.6s ease;}
+  .fade.show{opacity:1;transform:translateY(0);}
+
+  @media(max-width:900px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .about{grid-template-columns:1fr;gap:36px;}
+    .stats-grid{grid-template-columns:1fr;gap:24px;}
+    nav a:not(.nav-btn){display:none;}
+  }
+
+  @media(max-width:600px){
+    nav{padding:16px 5%;}
+    .logo{font-size:1.1rem;}
+    .nav-btn{padding:8px 16px;font-size:.78rem;}
+
+    .hero{padding:90px 6% 60px;}
+    .hero-logo{width:90px;height:90px;margin-bottom:22px;}
+    .hero h1{font-size:2.2rem;margin-bottom:18px;}
+    .hero p{font-size:.95rem;margin-bottom:30px;}
+    .hero-actions{flex-direction:column;width:100%;}
+    .btn-primary,.btn-outline{width:100%;text-align:center;padding:15px 20px;}
+
+    section{padding:56px 6%;}
+    .section-title{font-size:1.6rem;}
+    .section-head{margin-bottom:36px;}
+
+    .cat-row{gap:8px;}
+    .cat-pill{padding:8px 16px;font-size:.78rem;}
+
+    .grid{grid-template-columns:1fr 1fr;gap:12px;}
+    .card-img{height:130px;font-size:1.7rem;}
+    .card-body{padding:12px 14px;}
+    .card-name{font-size:.85rem;}
+    .card-price{font-size:.95rem;}
+
+    .stats-bar{padding:44px 6%;}
+    .stat-num{font-size:2.2rem;}
+
+    .about-visual{height:220px;font-size:3rem;}
+    .update-panel{padding:32px 24px;}
+    .update-panel h3{font-size:1.3rem;}
+    .contact-box{padding:32px 24px;}
+    .contact-box h3{font-size:1.25rem;}
+
+    .whatsapp-btn{bottom:16px;right:16px;padding:12px 18px;font-size:.85rem;}
+  }
+
+  @media(max-width:380px){
+    .grid{grid-template-columns:1fr;}
+    .hero h1{font-size:1.9rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">THRIFT<span>BOIII</span></div>
+  <div><a href="#shop">Shop</a><a href="#about">About</a><a href="https://wa.me/6737156809" target="_blank" class="nav-btn">Message Us</a></div>
+</nav>
+
+<section class="hero">
+  <img src="thrift-boiii-logo.jpeg" alt="Thrift Boiii Logo" class="hero-logo">
+  <div class="eyebrow">Second Chance Goods</div>
+  <h1>Pre-loved fits.<br>New to <span>you.</span></h1>
+  <p>Curated secondhand streetwear and everyday pieces — good condition, good prices, dropped weekly.</p>
+  <div class="hero-actions">
+    <a href="#shop" class="btn-primary">Shop the Drop</a>
+    <a href="https://wa.me/6737156809" target="_blank" class="btn-outline">WhatsApp Us</a>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div><div class="stat-num">200+</div><div class="stat-label">Items Sold</div></div>
+    <div><div class="stat-num">Weekly</div><div class="stat-label">New Drops</div></div>
+    <div><div class="stat-num">100%</div><div class="stat-label">Checked Quality</div></div>
+  </div>
+</div>
+
+<section id="shop">
+  <div class="section-head">
+    <div class="section-eyebrow">The Rack</div>
+    <h2 class="section-title">Latest Drop</h2>
+  </div>
+  <div class="cat-row">
+    <span class="cat-pill active" data-cat="all">All</span>
+    <span class="cat-pill" data-cat="tops">Tops</span>
+    <span class="cat-pill" data-cat="bottoms">Bottoms</span>
+    <span class="cat-pill" data-cat="outerwear">Outerwear</span>
+    <span class="cat-pill" data-cat="accessories">Accessories</span>
+  </div>
+
+  <!-- ============================================
+       ADD NEW ITEMS BELOW — copy a whole .card block,
+       change emoji/name/price/size/category, done.
+  ============================================= -->
+  <div class="grid" id="productGrid">
+    <div class="card fade" data-cat="tops"><div class="card-img">👕</div><div class="card-body"><div class="card-tag">Tops</div><div class="card-name">Vintage Band Tee</div><div class="card-price">$12</div><div class="card-size">Size M</div></div></div>
+    <div class="card fade" data-cat="outerwear"><div class="card-img">🧥</div><div class="card-body"><div class="card-tag">Outerwear</div><div class="card-name">Denim Jacket</div><div class="card-price">$25</div><div class="card-size">Size L</div></div></div>
+    <div class="card fade" data-cat="bottoms"><div class="card-img">👖</div><div class="card-body"><div class="card-tag">Bottoms</div><div class="card-name">Cargo Pants</div><div class="card-price">$18</div><div class="card-size">Size 32</div></div></div>
+    <div class="card fade" data-cat="accessories"><div class="card-img">🧢</div><div class="card-body"><div class="card-tag">Accessories</div><div class="card-name">Snapback Cap</div><div class="card-price">$8</div><div class="card-size">One Size</div></div></div>
+    <div class="card fade" data-cat="tops"><div class="card-img">👕</div><div class="card-body"><div class="card-tag">Tops</div><div class="card-name">Flannel Shirt</div><div class="card-price">$15</div><div class="card-size">Size L</div></div></div>
+    <div class="card fade" data-cat="outerwear"><div class="card-img">🧥</div><div class="card-body"><div class="card-tag">Outerwear</div><div class="card-name">Bomber Jacket</div><div class="card-price">$30</div><div class="card-size">Size M</div></div></div>
+    <div class="card fade" data-cat="bottoms"><div class="card-img">🩳</div><div class="card-body"><div class="card-tag">Bottoms</div><div class="card-name">Denim Shorts</div><div class="card-price">$10</div><div class="card-size">Size 30</div></div></div>
+    <div class="card fade" data-cat="accessories"><div class="card-img">👜</div><div class="card-body"><div class="card-tag">Accessories</div><div class="card-name">Canvas Tote</div><div class="card-price">$7</div><div class="card-size">One Size</div></div></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about">
+    <div class="about-visual fade">🏷️</div>
+    <div class="about-text fade">
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="section-title" style="margin-bottom:20px;">Good Clothes Deserve<br>A Second Life</h2>
+      <p>Thrift Boiii started as a way to give quality secondhand pieces a second chance instead of ending up in the bin. Every item is checked for quality before it goes up.</p>
+      <p>New drops go up weekly — follow our Instagram or check back here so you don't miss the good stuff.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="update-panel fade">
+    <h3>New Stock, Anytime</h3>
+    <p>Every new item gets added straight to the site the moment it's ready — so what you see here is always what's actually available right now.</p>
+  </div>
+</section>
+
+<section>
+  <div class="contact-box fade">
+    <h3>Want Something You See?</h3>
+    <p>Message us on WhatsApp with the item name to reserve it or ask questions.</p>
+    <a href="https://wa.me/6737156809" target="_blank" class="btn-primary">Message on WhatsApp</a>
+  </div>
+</section>
+
+<a href="https://wa.me/6737156809" target="_blank" class="whatsapp-btn">💬 Chat With Us</a>
+
+<footer>© 2026 Thrift Boiii — Second Chance Goods · Sample site by Pixel.bn</footer>
+
+<script>
+  const fades = document.querySelectorAll('.fade');
+  const obs = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target);}}),{threshold:.12});
+  fades.forEach(f=>obs.observe(f));
+
+  const pills = document.querySelectorAll('.cat-pill');
+  const cards = document.querySelectorAll('#productGrid .card');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const cat = pill.dataset.cat;
+      cards.forEach(card => {
+        card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
