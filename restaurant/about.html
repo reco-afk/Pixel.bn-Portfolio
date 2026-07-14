@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Meet the fictional story and cuisine philosophy behind Rumbia.">
+  <meta name="theme-color" content="#08110d">
+  <title>About | Rumbia</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308110d'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='serif' font-size='34' font-weight='700' fill='%23d39a58'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js'); addEventListener('load', () => document.body?.classList.add('page-ready'), { once: true })</script>
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body data-page="about">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="brand" href="index.html" data-transition>Rumbia</a>
+    <nav class="desktop-nav" aria-label="Main menu"><a href="index.html" data-page-link="home" data-transition>Home</a><a href="menu.html" data-page-link="menu" data-transition>Menu</a><a href="reservations.html" data-page-link="reservations" data-transition>Reservations</a><a href="about.html" data-page-link="about" data-transition>About</a><a href="#visit" data-page-link="visit">Visit</a></nav>
+    <details class="mobile-menu"><summary>Menu</summary><nav aria-label="Mobile menu"><a href="index.html" data-page-link="home" data-transition>Home</a><a href="menu.html" data-page-link="menu" data-transition>Menu</a><a href="reservations.html" data-page-link="reservations" data-transition>Reservations</a><a href="about.html" data-page-link="about" data-transition>About</a><a href="#visit" data-page-link="visit">Visit</a></nav></details>
+    <a class="button button-accent header-reserve" href="reservations.html" data-transition>Reserve</a>
+  </header>
+
+  <main id="main" class="about-page page-enter">
+    <section class="about-hero" aria-labelledby="about-title">
+      <div class="about-visual load-reveal">
+        <img src="assets/interior.webp" width="1537" height="1023" alt="Rumbia's imagined forest-green dining room" fetchpriority="high">
+        <div class="about-visual-copy"><h1 id="about-title">About</h1></div>
+      </div>
+      <div class="about-content-grid">
+        <article class="about-intro load-reveal"><h2>A fictional kitchen with local roots.</h2><p>Rumbia imagines a small evening restaurant in Bandar Seri Begawan. Its menu begins with Bruneian comfort food, then follows shared ingredients and cooking traditions across Southeast Asia.</p></article>
+        <div class="about-image load-reveal"><img src="assets/preparation.webp" width="1536" height="1024" loading="lazy" alt="A chef arranging fresh herbs, sambal and calamansi"></div>
+        <article class="story-block load-reveal"><div><h3>Led by the ingredient.</h3><p>The fictional kitchen team prepares sambals, spice pastes and broths in small batches. Open fire adds smoke without hiding the freshness underneath.</p></div><a class="text-link" href="menu.html" data-transition>Browse the dishes <span aria-hidden="true">↗</span></a></article>
+      </div>
+    </section>
+
+    <section class="philosophy-section shell" aria-labelledby="philosophy-title">
+      <div class="philosophy-grid" data-reveal>
+        <div class="ingredient-image"><img src="assets/ingredients.webp" width="1024" height="1536" loading="lazy" alt="Torch ginger, pandan, calamansi, lemongrass and fresh turmeric"></div>
+        <div class="philosophy-copy"><h2 id="philosophy-title">Bright herbs. Deep fire.</h2><p>Calamansi, torch ginger, pandan, turmeric and local greens form the centre of the menu. The compositions are contemporary, but the flavours remain recognisable.</p><p>Chef Amina Rahman and the Rumbia team are fictional characters created for this portfolio demonstration. No awards, reviews or real restaurant claims are presented.</p></div>
+      </div>
+    </section>
+
+    <section class="visit-section" id="visit" aria-labelledby="visit-title">
+      <div class="visit-image" data-reveal><img src="assets/hero-spread.webp" width="1536" height="1024" loading="lazy" alt="Grilled fish, ambuyat, rice and local vegetables on a dark table"></div>
+      <div class="visit-copy" data-reveal>
+        <h2 id="visit-title">Visit Rumbia.</h2>
+        <p>Imagined for Kiulap, Bandar Seri Begawan. This is a portfolio concept and not a real venue.</p>
+        <dl class="hours"><div><dt>Tuesday to Thursday</dt><dd>5:30 pm - 10:00 pm</dd></div><div><dt>Friday to Sunday</dt><dd>12:00 pm - 10:30 pm</dd></div><div><dt>Monday</dt><dd>Closed</dd></div></dl>
+        <div class="contact-lines"><span>hello@rumbia.example</span><span>+673 222 0148</span></div>
+        <a class="button button-accent" href="reservations.html" data-transition>Reserve a table</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer shell">
+    <div><div class="footer-brand">Rumbia</div><div class="concept-note">Bruneian and Southeast Asian kitchen</div></div>
+    <nav class="footer-nav" aria-label="Footer navigation"><a href="index.html" data-transition>Home</a><a href="menu.html" data-transition>Menu</a><a href="reservations.html" data-transition>Reservations</a><a href="#visit">Visit</a></nav>
+    <p class="footer-meta">Fictional restaurant concept for the Pixel.bn portfolio. No real venue, orders or bookings.</p>
+  </footer>
+</body>
+</html>

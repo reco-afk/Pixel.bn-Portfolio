@@ -1,1063 +1,445 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Designer Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg: #EFF4F6;
-    --bg-white: #FFFFFF;
-    --ink: #12232E;
-    --muted: #5B6B74;
-    --accent: #FF6B47;
-    --accent-soft: #FFE4DB;
-    --teal: #1B8A7E;
-    --border: rgba(18,35,46,0.08);
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    overflow-x: hidden;
-  }
-
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 24px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(239,244,246,0.85);
-    backdrop-filter: blur(10px);
-    transition: box-shadow 0.3s ease;
-  }
-
-  nav.scrolled { box-shadow: 0 4px 20px rgba(18,35,46,0.06); }
-
-  .nav-logo {
-    font-family: 'Sora', sans-serif;
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: var(--ink);
-    text-decoration: none;
-  }
-
-  .nav-logo span { color: var(--accent); }
-
-  .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.25s ease;
-  }
-
-  .nav-links a:hover { color: var(--ink); }
-
-  .nav-cta {
-    background: var(--ink);
-    color: var(--bg-white);
-    border: none;
-    padding: 12px 26px;
-    border-radius: 100px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-  }
-
-  .nav-cta:hover {
-    background: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  /* HERO */
-  .hero {
-    min-height: 92vh;
-    display: flex;
-    align-items: center;
-    padding: 140px 48px 80px;
-    max-width: 1300px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .hero-blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(70px);
-    z-index: -1;
-    opacity: 0.55;
-  }
-
-  .blob-1 {
-    width: 420px; height: 420px;
-    background: radial-gradient(circle, var(--accent-soft), transparent 70%);
-    top: -120px; right: -60px;
-    animation: blobFloat 12s ease-in-out infinite;
-  }
-
-  .blob-2 {
-    width: 380px; height: 380px;
-    background: radial-gradient(circle, #D6EFEC, transparent 70%);
-    bottom: -140px; left: -100px;
-    animation: blobFloat 14s ease-in-out infinite 2s;
-  }
-
-  .blob-3 {
-    width: 260px; height: 260px;
-    background: radial-gradient(circle, #FFF3D6, transparent 70%);
-    top: 30%; left: 45%;
-    animation: blobFloat 10s ease-in-out infinite 1s;
-  }
-
-  .hero-dots {
-    position: absolute;
-    top: 60px; right: 6%;
-    width: 140px;
-    height: 140px;
-    background-image: radial-gradient(var(--border) 2px, transparent 2px);
-    background-size: 18px 18px;
-    z-index: -1;
-    opacity: 0.7;
-  }
-
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 60px;
-    align-items: center;
-    width: 100%;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--bg-white);
-    border: 1px solid var(--border);
-    padding: 8px 18px;
-    border-radius: 100px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--muted);
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 0.7s ease 0.1s forwards;
-  }
-
-  .hero-badge .dot {
-    width: 8px; height: 8px;
-    background: #2ECC71;
-    border-radius: 50%;
-    animation: pulse 2s ease infinite;
-  }
-
-  .hero-title {
-    font-family: 'Sora', sans-serif;
-    font-size: clamp(2.6rem, 5.2vw, 4.2rem);
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-    margin-bottom: 24px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.25s forwards;
-  }
-
-  .hero-title .highlight {
-    position: relative;
-    color: var(--accent);
-    white-space: nowrap;
-  }
-
-  .hero-subtitle {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--muted);
-    max-width: 460px;
-    margin-bottom: 36px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.4s forwards;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.55s forwards;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 16px 32px;
-    border-radius: 100px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: 0 8px 24px rgba(255,107,71,0.3);
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(255,107,71,0.4);
-  }
-
-  .btn-ghost {
-    color: var(--ink);
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 16px 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: gap 0.3s ease;
-  }
-
-  .btn-ghost:hover { gap: 14px; }
-
-  /* HERO VISUAL */
-  .hero-visual {
-    position: relative;
-    opacity: 0;
-    animation: fadeUp 0.9s ease 0.4s forwards;
-  }
-
-  .visual-card {
-    background: var(--bg-white);
-    border-radius: 24px;
-    padding: 32px;
-    box-shadow: 0 20px 60px rgba(18,35,46,0.1);
-    position: relative;
-    z-index: 2;
-  }
-
-  .visual-browser-bar {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 20px;
-  }
-
-  .visual-browser-bar span {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--border);
-  }
-
-  .visual-line {
-    height: 12px;
-    background: var(--bg);
-    border-radius: 6px;
-    margin-bottom: 12px;
-  }
-
-  .visual-line.short { width: 60%; }
-  .visual-line.accent { background: var(--accent-soft); width: 40%; height: 32px; border-radius: 8px; margin-top: 20px; }
-
-  .visual-block {
-    height: 90px;
-    background: linear-gradient(135deg, var(--accent-soft), #D6EFEC);
-    border-radius: 14px;
-    margin-bottom: 20px;
-  }
-
-  .floating-chip {
-    position: absolute;
-    background: var(--bg-white);
-    border-radius: 16px;
-    padding: 14px 20px;
-    box-shadow: 0 12px 30px rgba(18,35,46,0.12);
-    font-size: 0.85rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 3;
-  }
-
-  .chip-1 {
-    top: -20px; right: -20px;
-    animation: float 4s ease-in-out infinite;
-  }
-
-  .chip-2 {
-    bottom: 20px; left: -30px;
-    animation: float 4s ease-in-out infinite 1.5s;
-  }
-
-  .chip-dot {
-    width: 20px; height: 20px;
-    border-radius: 6px;
-    background: var(--teal);
-  }
-
-  .chip-1 .chip-dot { background: var(--accent); }
-
-  /* MARQUEE */
-  .marquee-section {
-    padding: 24px 0;
-    overflow: hidden;
-    background: var(--ink);
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 50px;
-    animation: marquee 22s linear infinite;
-    white-space: nowrap;
-  }
-
-  .marquee-item {
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.9);
-    display: flex;
-    align-items: center;
-    gap: 50px;
-  }
-
-  .marquee-item::after { content: '✦'; color: var(--accent); }
-
-  /* SECTIONS */
-  section {
-    padding: 100px 48px;
-    max-width: 1300px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    margin-bottom: 16px;
-  }
-
-  .section-title {
-    font-family: 'Sora', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 20px;
-  }
-
-  .section-title .highlight { color: var(--accent); }
-
-  /* ABOUT */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 70px;
-    align-items: center;
-  }
-
-  .about-text {
-    font-size: 1.02rem;
-    line-height: 1.85;
-    color: var(--muted);
-  }
-
-  .about-text p + p { margin-top: 18px; }
-
-  .value-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .value-item {
-    display: flex;
-    gap: 18px;
-    align-items: flex-start;
-    background: var(--bg-white);
-    padding: 24px;
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .value-item:hover {
-    transform: translateX(6px);
-    box-shadow: 0 12px 30px rgba(18,35,46,0.08);
-  }
-
-  .value-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    background: var(--accent-soft);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    flex-shrink: 0;
-  }
-
-  .value-title {
-    font-weight: 700;
-    margin-bottom: 4px;
-    font-size: 1rem;
-  }
-
-  .value-desc {
-    font-size: 0.88rem;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  /* WORK PREVIEWS */
-  .work-preview-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    margin-top: 50px;
-  }
-
-  .work-preview-card {
-    background: var(--bg-white);
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-  }
-
-  .work-preview-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 44px rgba(18,35,46,0.12);
-  }
-
-  .preview-browser-bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 12px 16px;
-    background: #E9EEF0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .preview-browser-bar span {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: #ccc;
-  }
-
-  .preview-browser-bar span:nth-child(1) { background: #FF5F57; }
-  .preview-browser-bar span:nth-child(2) { background: #FEBC2E; }
-  .preview-browser-bar span:nth-child(3) { background: #28C840; }
-
-  .preview-url {
-    margin-left: 12px;
-    background: var(--bg-white);
-    border-radius: 6px;
-    padding: 4px 12px;
-    font-size: 0.72rem;
-    color: var(--muted);
-    flex: 1;
-  }
-
-  .preview-frame {
-    width: 100%;
-    height: 340px;
-    border: none;
-    display: block;
-    background: white;
-  }
-
-  .preview-footer {
-    padding: 24px 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .preview-link {
-    flex-shrink: 0;
-    color: var(--accent);
-    font-weight: 700;
-    text-decoration: none;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    padding-top: 4px;
-    transition: transform 0.25s ease;
-    display: inline-block;
-  }
-
-  .preview-link:hover { transform: translateX(4px); }
-
-  @media (max-width: 900px) {
-    .work-preview-grid { grid-template-columns: 1fr; }
-    .preview-frame { height: 280px; }
-    .preview-footer { flex-direction: column; }
-  }
-
-  /* SERVICES */
-  .services-section { background: var(--bg-white); }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 50px;
-  }
-
-  .service-card {
-    background: var(--bg);
-    border-radius: 20px;
-    padding: 36px 28px;
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 36px rgba(18,35,46,0.1);
-  }
-
-  .service-icon {
-    width: 52px; height: 52px;
-    border-radius: 14px;
-    background: var(--bg-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 24px;
-  }
-
-  .service-card:nth-child(1) .service-icon { background: var(--accent-soft); }
-  .service-card:nth-child(2) .service-icon { background: #D6EFEC; }
-  .service-card:nth-child(3) .service-icon { background: #FFF3D6; }
-
-  .service-title {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700;
-    font-size: 1.15rem;
-    margin-bottom: 10px;
-  }
-
-  .service-desc {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: var(--muted);
-  }
-
-  /* PROCESS */
-  .process-timeline {
-    margin-top: 60px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .process-row {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 32px;
-    padding: 32px 0;
-    border-top: 1px solid var(--border);
-    align-items: center;
-  }
-
-  .process-row:last-child { border-bottom: 1px solid var(--border); }
-
-  .process-num {
-    font-family: 'Sora', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--accent);
-  }
-
-  .process-row-title {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700;
-    font-size: 1.15rem;
-    margin-bottom: 6px;
-  }
-
-  .process-row-desc {
-    font-size: 0.92rem;
-    color: var(--muted);
-    line-height: 1.6;
-    max-width: 600px;
-  }
-
-  /* CTA */
-  .cta-section {
-    background: var(--ink);
-    border-radius: 32px;
-    margin: 0 48px 100px;
-    padding: 90px 48px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    width: 400px; height: 400px;
-    background: var(--accent);
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.25;
-    top: -100px; right: -100px;
-  }
-
-  .cta-inner {
-    position: relative;
-    z-index: 2;
-    max-width: 640px;
-    margin: 0 auto;
-  }
-
-  .cta-title {
-    font-family: 'Sora', sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 800;
-    color: white;
-    margin-bottom: 20px;
-    line-height: 1.2;
-  }
-
-  .cta-title .highlight { color: var(--accent); }
-
-  .cta-text {
-    color: rgba(255,255,255,0.7);
-    font-size: 1rem;
-    line-height: 1.7;
-    margin-bottom: 36px;
-  }
-
-  /* FOOTER */
-  footer {
-    padding: 32px 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .footer-copy {
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 28px;
-    list-style: none;
-  }
-
-  .footer-links a {
-    font-size: 0.85rem;
-    color: var(--muted);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.25s ease;
-  }
-
-  .footer-links a:hover { color: var(--accent); }
-
-  /* REVEAL */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes blobFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(20px, -30px) scale(1.08); }
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  @media (max-width: 900px) {
-    .hero-grid { grid-template-columns: 1fr; }
-    .hero-visual { order: -1; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .services-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    section { padding: 70px 24px; }
-    .hero { padding: 120px 24px 60px; }
-    .cta-section { margin: 0 24px 70px; padding: 60px 28px; }
-    footer { flex-direction: column; gap: 16px; text-align: center; }
-    .process-row { grid-template-columns: 50px 1fr; gap: 20px; }
-    .hero-blob { opacity: 0.4; }
-    .blob-1 { width: 280px; height: 280px; }
-    .blob-2 { width: 260px; height: 260px; }
-    .blob-3 { width: 180px; height: 180px; }
-  }
-
-  @media (max-width: 600px) {
-    nav { padding: 16px 20px; }
-    .nav-logo { font-size: 1rem; }
-    .nav-cta { padding: 10px 18px; font-size: 0.8rem; }
-
-    .hero { padding: 110px 20px 50px; min-height: auto; }
-    .hero-badge { font-size: 0.75rem; padding: 7px 14px; margin-bottom: 20px; }
-    .hero-title { font-size: 2rem; margin-bottom: 18px; }
-    .hero-subtitle { font-size: 0.95rem; margin-bottom: 28px; }
-    .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
-    .btn-primary { text-align: center; padding: 15px 24px; width: 100%; }
-    .btn-ghost { justify-content: center; padding: 8px; }
-
-    .hero-dots { display: none; }
-    .visual-card { padding: 22px; border-radius: 18px; }
-    .floating-chip { padding: 10px 14px; font-size: 0.75rem; }
-    .chip-1 { top: -14px; right: -10px; }
-    .chip-2 { bottom: 10px; left: -14px; }
-
-    section { padding: 56px 20px; }
-    .section-title { font-size: 1.7rem; }
-    .section-label { font-size: 0.72rem; }
-
-    .value-item { padding: 18px; gap: 14px; }
-    .value-icon { width: 38px; height: 38px; font-size: 1.1rem; }
-
-    .service-card { padding: 28px 22px; }
-
-    .process-row { grid-template-columns: 36px 1fr; gap: 14px; padding: 24px 0; }
-    .process-num { font-size: 1.2rem; }
-    .process-row-title { font-size: 1rem; }
-    .process-row-desc { font-size: 0.85rem; }
-
-    .cta-section { margin: 0 16px 50px; padding: 48px 22px; border-radius: 22px; }
-    .cta-title { font-size: 1.6rem; }
-    .cta-text { font-size: 0.9rem; margin-bottom: 28px; }
-    .cta-section .btn-primary { display: block; word-break: break-word; }
-
-    .marquee-item { font-size: 0.72rem; }
-
-    footer { padding: 28px 20px; }
-  }
-
-  @media (max-width: 380px) {
-    .hero-title { font-size: 1.7rem; }
-    .cta-title { font-size: 1.4rem; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Pixel.bn designs and builds clear, responsive websites for small businesses.">
+  <title>Pixel.bn | Web design for small businesses</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315203a'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Arial' font-size='30' font-weight='700' fill='white'%3EP%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #ececec;
+      --surface: #f8f9fc;
+      --surface-2: #e4ebfa;
+      --ink: #15203a;
+      --muted: #59657d;
+      --line: #d5d9e2;
+      --accent: #426cc7;
+      --accent-text: #365fb6;
+      --accent-soft: #dbe7ff;
+      --accent-ink: #ffffff;
+      --radius: 20px;
+      --max: 1120px;
+      --shadow: 0 22px 60px rgba(40, 57, 92, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    section[id] { scroll-margin-top: 104px; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    button, input, textarea { font: inherit; }
+    img { display: block; max-width: 100%; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+    .shell { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 12px 0;
+      background: color-mix(in srgb, var(--page) 88%, transparent);
+      backdrop-filter: blur(14px);
+      animation: nav-in .46s cubic-bezier(.16, 1, .3, 1) both;
+    }
+    .nav {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      transition: border-color .25s ease, box-shadow .25s ease;
+    }
+    .nav-wrap.scrolled .nav { border-color: var(--line); box-shadow: var(--shadow); }
+    .brand { min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; font-size: 1.02rem; font-weight: 800; line-height: 1; letter-spacing: -.035em; }
+    .nav-links { display: flex; align-items: center; gap: 28px; margin: 0; padding: 0; list-style: none; }
+    .nav-links a { min-height: 44px; display: inline-flex; align-items: center; color: var(--muted); font-size: .84rem; text-decoration: none; transition: color .2s ease; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 7px; }
+    .mobile-menu { display: none; position: relative; }
+    .mobile-menu summary { min-height: 44px; display: inline-flex; align-items: center; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); font-size: .82rem; font-weight: 700; cursor: pointer; list-style: none; }
+    .mobile-menu summary::-webkit-details-marker { display: none; }
+    .mobile-menu ul { position: absolute; top: calc(100% + 10px); right: 0; width: 210px; display: grid; gap: 2px; margin: 0; padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); list-style: none; }
+    .mobile-menu a { min-height: 44px; display: flex; align-items: center; padding: 0 12px; border-radius: 8px; color: var(--ink); font-size: .88rem; text-decoration: none; }
+    .mobile-menu a:hover, .mobile-menu a:focus-visible { background: var(--accent-soft); }
+    .mobile-menu a[aria-current="location"] { background: var(--accent-soft); color: var(--ink); }
+    .skip-link { position: fixed; z-index: 30; top: -80px; left: 16px; padding: 10px 16px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; }
+    .skip-link:focus { top: 16px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 20px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--page);
+      font-size: .86rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button:active { transform: translateY(1px); }
+    .button-accent { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+
+    .hero {
+      min-height: calc(100dvh - 88px);
+      display: grid;
+      place-items: center;
+      padding: 28px 0 56px;
+    }
+    .hero-panel {
+      width: 100%;
+      min-height: min(640px, calc(100dvh - 132px));
+      display: grid;
+      place-items: center;
+      padding: clamp(40px, 8vw, 96px) 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .85);
+      border-radius: var(--radius);
+      background-color: var(--surface);
+      background-image: radial-gradient(circle, rgba(66, 108, 199, .13) 1.2px, transparent 1.2px);
+      background-position: center;
+      background-size: 22px 22px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), var(--shadow);
+      text-align: center;
+    }
+    .hero-content { max-width: 860px; padding: clamp(28px, 5vw, 56px); border-radius: var(--radius); background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(2px); }
+    .kicker { margin: 0 0 18px; color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    h1, h2, h3, p { text-wrap: balance; }
+    h1 { margin: 0; font-size: clamp(3.4rem, 7.6vw, 6.8rem); line-height: .94; letter-spacing: -.065em; }
+    .hero-line { display: block; }
+    .hero-name { color: var(--accent); }
+    .hero-actions { display: flex; justify-content: center; gap: 14px; margin-top: 28px; }
+    .text-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); font-size: .86rem; font-weight: 700; text-underline-offset: 5px; }
+
+    .section { padding: clamp(80px, 10vw, 136px) 0; }
+    .section-head { max-width: 820px; margin-bottom: clamp(42px, 6vw, 76px); }
+    .section-head h2, .about-copy h2, .contact-copy h2 { margin: 0; font-size: clamp(2.4rem, 5vw, 4.6rem); line-height: .95; letter-spacing: -.06em; }
+    .section-head p, .about-copy p, .contact-copy p { max-width: 62ch; margin: 18px 0 0; color: var(--muted); }
+
+    #work { padding-top: clamp(100px, 13vw, 180px); }
+    .work-grid { display: grid; gap: clamp(84px, 12vw, 150px); }
+    .project { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(250px, .55fr); gap: clamp(28px, 5vw, 68px); align-items: end; }
+    .project-link { color: inherit; text-decoration: none; }
+    .project-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 8px; border-radius: 14px; }
+    .project:nth-child(even) { grid-template-columns: minmax(250px, .55fr) minmax(0, 1.45fr); }
+    .project:nth-child(even) .project-visual { order: 2; }
+    .project-visual { position: relative; aspect-ratio: 16 / 10; display: grid; place-items: center; overflow: hidden; border-radius: 14px; background: var(--accent-soft); box-shadow: 0 18px 46px rgba(40, 57, 92, .08); clip-path: inset(0 0 0 0 round 14px); transition: clip-path .5s cubic-bezier(.16, 1, .3, 1), transform .42s cubic-bezier(.16, 1, .3, 1); }
+    .project-visual > img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.16, 1, .3, 1); }
+    .project-visual-badge { position: absolute; top: 18px; left: 18px; padding: 9px 12px; border-radius: 999px; background: rgba(6, 22, 15, .88); color: #fff8e9; font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; backdrop-filter: blur(8px); }
+    .project-visual.media-fallback { min-height: 260px; background: var(--accent-soft); }
+    .project-visual.media-fallback::after { content: "Preview unavailable"; color: var(--accent-text); font-size: .82rem; font-weight: 700; }
+    .reveal-ready .project.reveal:not(.visible) .project-visual { clip-path: inset(0 0 18% 0 round 14px); }
+    .project-visual-inner {
+      width: calc(100% - clamp(34px, 6vw, 90px));
+      height: calc(100% - clamp(34px, 6vw, 90px));
+      display: grid;
+      align-content: space-between;
+      padding: clamp(22px, 4vw, 44px);
+      border: 1px solid rgba(66, 108, 199, .22);
+      background: rgba(255, 255, 255, .72);
+      color: var(--accent);
+      transition: transform .55s cubic-bezier(.16, 1, .3, 1);
+    }
+    .project:hover .project-visual { transform: translateY(-5px); }
+    .project:hover .project-visual > img { transform: scale(1.025); }
+    .project:hover .project-visual-inner { transform: scale(1.018); }
+    .project-stage-label { font-size: .74rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+    .project-stage-title { max-width: 9ch; color: var(--ink); font-size: clamp(2.4rem, 6vw, 6rem); font-weight: 800; line-height: .82; letter-spacing: -.075em; }
+    .project-info { padding-bottom: 10px; }
+    .project-meta { margin: 0 0 14px; color: var(--accent-text); font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .project h3 { margin: 0; font-size: clamp(1.55rem, 3vw, 2.5rem); line-height: 1; letter-spacing: -.045em; }
+    .project p { margin: 14px 0 0; color: var(--muted); font-size: .92rem; }
+    .project-details { display: grid; gap: 10px; margin: 28px 0 0; padding-top: 18px; border-top: 1px solid var(--line); }
+    .project-details div { display: grid; grid-template-columns: 76px 1fr; gap: 12px; }
+    .project-details dt { color: var(--muted); font-size: .72rem; }
+    .project-details dd { margin: 0; font-size: .78rem; font-weight: 700; }
+    .project-status { display: inline-flex; margin-top: 24px; color: var(--ink); font-size: .78rem; font-weight: 700; text-decoration: none; text-underline-offset: 5px; }
+
+    #about { padding-top: clamp(100px, 14vw, 190px); }
+    .about-panel { display: grid; grid-template-columns: 1.2fr .8fr; align-items: start; gap: clamp(48px, 10vw, 130px); padding: clamp(52px, 8vw, 96px) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .about-points { display: grid; gap: 12px; }
+    .about-point { padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .about-point strong { display: block; margin-bottom: 4px; font-size: .92rem; }
+    .about-point span { color: var(--muted); font-size: .82rem; }
+    .honesty { margin-top: 30px; padding-left: 18px; border-left: 3px solid var(--accent); color: var(--ink) !important; font-weight: 700; }
+
+    .services { display: grid; grid-template-columns: 1.1fr .9fr; gap: 44px; align-items: start; }
+    .service-list { margin: 0; padding: 0; list-style: none; }
+    .service-list li { display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 24px 16px; border-bottom: 1px solid var(--line); transition: background .3s ease, padding-left .3s ease; }
+    .service-list li:hover { padding-left: 24px; background: rgba(255,255,255,.45); }
+    .service-list li:first-child { padding-top: 0; }
+    .service-list h3 { margin: 0; font-size: 1rem; }
+    .service-list p { max-width: 48ch; margin: 6px 0 0; color: var(--muted); font-size: .88rem; }
+    .service-mark { color: var(--accent); font-weight: 800; }
+
+    .faq-layout { display: grid; grid-template-columns: .72fr 1.28fr; gap: 56px; align-items: start; }
+    .faq-layout > *, .faq-question > * { min-width: 0; }
+    .faq-title { position: sticky; top: 110px; }
+    .faq-title h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1; letter-spacing: -.05em; }
+    .faq { border-bottom: 1px solid var(--line); }
+    .faq-question { width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 22px 10px 22px 0; border: 0; background: transparent; color: var(--ink); text-align: left; cursor: pointer; }
+    .faq-question span:first-child { font-weight: 700; }
+    .faq-icon { transition: transform .34s cubic-bezier(.16, 1, .3, 1), color .2s ease; }
+    .faq-question[aria-expanded="true"] .faq-icon { color: var(--accent); transform: rotate(45deg); }
+    .faq-answer { display: grid; grid-template-rows: 0fr; opacity: 0; transform: translateY(-6px); transition: grid-template-rows .36s cubic-bezier(.16, 1, .3, 1), opacity .26s ease, transform .36s cubic-bezier(.16, 1, .3, 1); }
+    .faq-answer.open { grid-template-rows: 1fr; opacity: 1; transform: none; }
+    .faq-answer-inner { overflow: hidden; }
+    .faq p { max-width: 58ch; margin: -6px 0 22px; color: var(--muted); font-size: .9rem; }
+
+    .contact { padding-bottom: 50px; }
+    .contact-panel { display: grid; grid-template-columns: .9fr 1.1fr; gap: 42px; padding: clamp(32px, 6vw, 70px); border: 1px solid rgba(255,255,255,.82); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+    .form { display: grid; gap: 15px; }
+    .field { display: grid; gap: 7px; }
+    .field label { color: var(--muted); font-size: .78rem; font-weight: 700; }
+    .field input, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); padding: 13px 14px; }
+    .field textarea { min-height: 132px; resize: vertical; }
+    .form .button { border: 0; cursor: pointer; }
+    .form-note { min-height: 1.4em; margin: 0; color: var(--muted); font-size: .78rem; }
+    .contact-fallbacks { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+    .contact-fallbacks a { min-height: 44px; display: inline-flex; align-items: center; color: var(--ink); font-size: .82rem; font-weight: 700; text-underline-offset: 4px; }
+
+    footer { display: flex; justify-content: space-between; gap: 24px; padding: 26px 0 42px; color: var(--muted); font-size: .8rem; }
+    footer a { min-height: 44px; display: inline-flex; align-items: center; text-underline-offset: 4px; }
+
+    .reveal { opacity: 1; transform: none; }
+    .reveal-ready .reveal { opacity: 0; transform: translateY(16px); transition: opacity .52s cubic-bezier(.16, 1, .3, 1), transform .52s cubic-bezier(.16, 1, .3, 1); }
+    .reveal-ready .reveal.visible { opacity: 1; transform: none; }
+    .hero-panel { animation: hero-in .58s cubic-bezier(.16, 1, .3, 1) .04s both; }
+    .hero-content > * { animation: copy-in .48s cubic-bezier(.16, 1, .3, 1) both; }
+    .hero-content > :nth-child(1) { animation-delay: .12s; }
+    .hero-content > :nth-child(2) { animation-delay: .17s; }
+    .hero-content > :nth-child(3) { animation-delay: .22s; }
+    .hero-content > :nth-child(4) { animation-delay: .27s; }
+    @keyframes nav-in { from { opacity: 0; transform: translateY(-10px); } }
+    @keyframes hero-in { from { opacity: 0; transform: translateY(10px) scale(.992); } }
+    @keyframes copy-in { from { opacity: 0; transform: translateY(12px); } }
+
+    @media (max-width: 980px) {
+      .project, .project:nth-child(even) { grid-template-columns: 1.18fr .82fr; gap: 28px; }
+      .project-stage-title { font-size: clamp(2.3rem, 7vw, 4.8rem); }
+      .project-details div { grid-template-columns: 64px 1fr; }
+    }
+
+    @media (max-width: 780px) {
+      .shell { width: min(calc(100% - 28px), var(--max)); }
+      .nav-links { display: none; }
+      .mobile-menu { display: block; }
+      .mobile-menu ul { position: fixed; top: 88px; right: 14px; left: 14px; width: auto; }
+      .nav { padding-inline: 12px; }
+      .hero { min-height: auto; padding-top: 10px; }
+      .hero-panel { min-height: 72dvh; }
+      h1 { font-size: clamp(2.5rem, 13vw, 4rem); line-height: .98; }
+      .hero-line { display: block; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .work-grid, .project, .project:nth-child(even), .about-panel, .services, .faq-layout, .contact-panel { grid-template-columns: 1fr; }
+      .project:nth-child(even) .project-visual { order: 0; }
+      .project-visual { aspect-ratio: 4 / 3; }
+      .project-info { max-width: 540px; }
+      .project-stage-title { font-size: clamp(2.5rem, 15vw, 4.8rem); }
+      .faq-title { position: static; }
+      footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
 <body>
+  <a class="skip-link" href="#top">Skip to content</a>
+  <header class="nav-wrap" id="topbar">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Pixel.bn home">pixel.bn</a>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <details class="mobile-menu">
+        <summary>Menu</summary>
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </details>
+      <a class="button" href="#contact">Contact</a>
+    </nav>
+  </header>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#" class="nav-logo">pixel<span>.bn</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#process">Process</a></li>
-  </ul>
-  <a href="https://wa.me/6737156809" target="_blank" class="nav-cta">Let's Talk</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-blob blob-1"></div>
-  <div class="hero-blob blob-2"></div>
-  <div class="hero-blob blob-3"></div>
-  <div class="hero-dots"></div>
-  <div class="hero-grid">
-    <div>
-      <div class="hero-badge">
-        <span class="dot"></span>
-        Available for new projects
-      </div>
-      <h1 class="hero-title">
-        Websites that help your <span class="highlight">business grow</span>
-      </h1>
-      <p class="hero-subtitle">
-        I build clean, fast, easy-to-use websites for small businesses. 
-        No jargon, no unnecessary complexity — just a site that works and looks good doing it.
-      </p>
-      <div class="hero-actions">
-        <a href="https://wa.me/6737156809" target="_blank" class="btn-primary">Chat on WhatsApp</a>
-        <a href="#services" class="btn-ghost">See what I offer →</a>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="visual-card">
-        <div class="visual-browser-bar">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="visual-block"></div>
-        <div class="visual-line"></div>
-        <div class="visual-line short"></div>
-        <div class="visual-line accent"></div>
-      </div>
-      <div class="floating-chip chip-1">
-        <span class="chip-dot"></span>
-        Fast & Responsive
-      </div>
-      <div class="floating-chip chip-2">
-        <span class="chip-dot"></span>
-        Mobile Friendly
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-section">
-  <div class="marquee-track">
-    <span class="marquee-item">Web Design</span>
-    <span class="marquee-item">Landing Pages</span>
-    <span class="marquee-item">Small Business Sites</span>
-    <span class="marquee-item">Responsive Design</span>
-    <span class="marquee-item">Fast Delivery</span>
-    <span class="marquee-item">Web Design</span>
-    <span class="marquee-item">Landing Pages</span>
-    <span class="marquee-item">Small Business Sites</span>
-    <span class="marquee-item">Responsive Design</span>
-    <span class="marquee-item">Fast Delivery</span>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-grid">
-    <div>
-      <p class="section-label reveal">About Me</p>
-      <h2 class="section-title reveal reveal-delay-1">
-        Just getting started, <span class="highlight">fully committed</span>
-      </h2>
-      <div class="about-text reveal reveal-delay-2">
-        <p>
-          I'm a web designer building modern websites for small businesses. 
-          I'm new to freelancing, but I take every project seriously and 
-          work closely with you to get it right.
-        </p>
-        <p>
-          I keep pricing fair and communication simple. You'll always know 
-          what's happening with your project, and I won't stop until you're happy with it.
-        </p>
-      </div>
-    </div>
-    <div class="value-list reveal reveal-delay-3">
-      <div class="value-item">
-        <div class="value-icon">💬</div>
-        <div>
-          <div class="value-title">Clear Communication</div>
-          <div class="value-desc">You'll always know where your project stands, no confusing updates.</div>
+  <main id="top">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div class="hero-panel">
+        <div class="hero-content">
+          <p class="kicker">UI/UX web designer</p>
+          <h1 id="hero-title"><span class="hero-line">Hi, I&apos;m <span class="hero-name">Safwan.</span></span></h1>
+          <p class="hero-copy">I design clear, responsive websites that help small businesses look credible and make it easy for customers to take action.</p>
+          <div class="hero-actions">
+            <a class="button button-accent" href="https://wa.me/6737156809" target="_blank" rel="noopener">Chat on WhatsApp</a>
+            <a class="text-link" href="#work">View concept work</a>
+          </div>
         </div>
       </div>
-      <div class="value-item">
-        <div class="value-icon">⚡</div>
-        <div>
-          <div class="value-title">Fast Turnaround</div>
-          <div class="value-desc">Small business websites don't need to take months. I move quickly.</div>
+    </section>
+
+    <section class="section shell" id="work">
+      <div class="section-head reveal">
+        <p class="kicker">Selected concepts</p>
+        <h2>Good work starts with a clear idea.</h2>
+        <p>These independent concepts show how I think about layout, hierarchy, responsiveness, and the customer journey.</p>
+      </div>
+      <div class="work-grid">
+        <a class="project project-link reveal" href="restaurant/index.html" target="_blank" rel="noopener" aria-label="Open the Rumbia restaurant concept website in a new tab">
+          <div class="project-visual"><img src="restaurant/assets/hero-spread.webp" alt="Bruneian grilled fish with rice and sambal from the fictional Rumbia restaurant concept" width="1536" height="1024" loading="lazy"><span class="project-visual-badge">Live concept</span></div>
+          <div class="project-info">
+            <p class="project-meta">Restaurant concept website</p>
+            <h3>Rumbia</h3>
+            <p>A fictional Bruneian and Southeast Asian kitchen, designed around atmosphere, menu discovery, and a simple reservation journey.</p>
+            <dl class="project-details"><div><dt>Role</dt><dd>UI/UX and development</dd></div><div><dt>Built with</dt><dd>HTML, CSS, JavaScript</dd></div><div><dt>Status</dt><dd>Independent concept</dd></div></dl>
+            <span class="project-status">View live site&nbsp;↗</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section shell" id="about">
+      <div class="about-panel reveal">
+        <div class="about-copy">
+          <p class="kicker">About</p>
+          <h2>New to freelancing. Serious about the work.</h2>
+          <p>I&apos;m building my practice around thoughtful design, honest communication, and websites that are simple for visitors to use.</p>
+          <p>I work directly with you from the first conversation to launch. That means fewer handoffs, clear updates, and careful attention to the details.</p>
+          <p class="honesty">No inflated agency story. Just focused work and a strong reason to get your first project right.</p>
+        </div>
+        <div class="about-points" aria-label="Working principles">
+          <div class="about-point"><strong>Clear communication</strong><span>Direct updates and simple explanations throughout the project.</span></div>
+          <div class="about-point"><strong>Thoughtful design</strong><span>Every layout choice should help a visitor understand or act.</span></div>
+          <div class="about-point"><strong>Careful delivery</strong><span>Responsive, accessible work tested before it reaches your customers.</span></div>
         </div>
       </div>
-      <div class="value-item">
-        <div class="value-icon">💰</div>
-        <div>
-          <div class="value-title">Fair Pricing</div>
-          <div class="value-desc">Honest rates that make sense for a small business budget.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- SERVICES -->
-<div class="services-section" id="services">
-  <section>
-    <p class="section-label reveal">What I Offer</p>
-    <h2 class="section-title reveal reveal-delay-1">
-      Simple services, <span class="highlight">real results</span>
-    </h2>
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <div class="service-icon">🖥️</div>
-        <h3 class="service-title">Website Design</h3>
-        <p class="service-desc">A clean, professional website built around your business and your customers.</p>
+    <section class="section shell services" id="services">
+      <div class="section-head reveal">
+        <h2>What I can help you with.</h2>
+        <p>A focused website package for businesses that need a professional online presence without unnecessary complexity.</p>
       </div>
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-icon">📱</div>
-        <h3 class="service-title">Mobile Friendly</h3>
-        <p class="service-desc">Your site will look and work great on phones, tablets, and desktops alike.</p>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-icon">🚀</div>
-        <h3 class="service-title">Landing Pages</h3>
-        <p class="service-desc">A focused, single page built to get visitors to take action, fast.</p>
-      </div>
-    </div>
-  </section>
-</div>
+      <ul class="service-list reveal">
+        <li><div><h3>Website design</h3><p>Clear structure, visual direction, and responsive layouts shaped around your goals.</p></div><span class="service-mark" aria-hidden="true">+</span></li>
+        <li><div><h3>Development and launch</h3><p>A fast, accessible website that works across modern phones, tablets, and desktops.</p></div><span class="service-mark" aria-hidden="true">+</span></li>
+        <li><div><h3>Landing pages</h3><p>Focused pages for a service, offer, campaign, or new business launch.</p></div><span class="service-mark" aria-hidden="true">+</span></li>
+      </ul>
+    </section>
 
-<!-- WORK / SAMPLES -->
-<section id="work">
-  <p class="section-label reveal">Sample Work</p>
-  <h2 class="section-title reveal reveal-delay-1">
-    See what I can <span class="highlight">build for you</span>
-  </h2>
-  <div class="work-preview-grid">
-    <div class="work-preview-card reveal">
-      <div class="preview-browser-bar">
-        <span></span><span></span><span></span>
-        <div class="preview-url">cafe-demo.html</div>
+    <section class="section shell faq-layout" id="faq">
+      <div class="faq-title reveal"><p class="kicker">FAQ</p><h2>Useful things to know.</h2></div>
+      <div class="reveal">
+        <div class="faq"><button class="faq-question" type="button" aria-expanded="true" aria-controls="faq-answer-1"><span>What kind of websites do you build?</span><span class="faq-icon" aria-hidden="true">+</span></button><div class="faq-answer open" id="faq-answer-1" aria-hidden="false"><div class="faq-answer-inner"><p>Small-business websites, service sites, portfolios, and focused landing pages. We will define the right scope before work begins.</p></div></div></div>
+        <div class="faq"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-2"><span>Can you help if I do not have content yet?</span><span class="faq-icon" aria-hidden="true">+</span></button><div class="faq-answer" id="faq-answer-2" aria-hidden="true"><div class="faq-answer-inner"><p>Yes. I can help organise your message and provide a clear content checklist. Final business facts and approvals still come from you.</p></div></div></div>
+        <div class="faq"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-3"><span>How will we work together?</span><span class="faq-icon" aria-hidden="true">+</span></button><div class="faq-answer" id="faq-answer-3" aria-hidden="true"><div class="faq-answer-inner"><p>We start with a short conversation, agree on the scope, review the design, build the site, test it, and prepare it for launch.</p></div></div></div>
+        <div class="faq"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-4"><span>How much will a website cost?</span><span class="faq-icon" aria-hidden="true">+</span></button><div class="faq-answer" id="faq-answer-4" aria-hidden="true"><div class="faq-answer-inner"><p>Pricing depends on the number of pages, content, features, and timeline. I will give you a clear quote before any paid work starts.</p></div></div></div>
       </div>
-      <iframe src="cafe-demo.html" class="preview-frame" loading="lazy"></iframe>
-      <div class="preview-footer">
-        <div>
-          <h3 class="service-title">Café Website</h3>
-          <p class="service-desc">Warm, simple site for a café — menu, featured items, hours, and location.</p>
-        </div>
-        <a href="cafe-demo.html" target="_blank" class="preview-link">Open Full ↗</a>
-      </div>
-    </div>
-    <div class="work-preview-card reveal reveal-delay-1">
-      <div class="preview-browser-bar">
-        <span></span><span></span><span></span>
-        <div class="preview-url">retail-demo.html</div>
-      </div>
-      <iframe src="retail-demo.html" class="preview-frame" loading="lazy"></iframe>
-      <div class="preview-footer">
-        <div>
-          <h3 class="service-title">Retail Shop Website</h3>
-          <p class="service-desc">Clean product showcase — categories, product grid, and easy contact.</p>
-        </div>
-        <a href="retail-demo.html" target="_blank" class="preview-link">Open Full ↗</a>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- PROCESS -->
-<section id="process">
-  <p class="section-label reveal">How It Works</p>
-
-  <h2 class="section-title reveal reveal-delay-1">
-    Simple <span class="highlight">3-step process</span>
-  </h2>
-  <div class="process-timeline">
-    <div class="process-row reveal">
-      <div class="process-num">01</div>
-      <div>
-        <div class="process-row-title">Tell me about your business</div>
-        <div class="process-row-desc">A quick chat about what you need, your style, and your goals.</div>
+    <section class="section shell contact" id="contact">
+      <div class="contact-panel reveal">
+        <div class="contact-copy"><p class="kicker">Contact</p><h2>Have a website in mind?</h2><p>The quickest way to reach me is on WhatsApp. Tell me what you are building and what you need help with.</p><div class="contact-fallbacks"><a class="button button-accent" href="https://wa.me/6737156809" target="_blank" rel="noopener">Chat on WhatsApp</a><a href="mailto:safwanarif1102009@gmail.com">Email instead</a></div></div>
+        <form class="form" id="contact-form" action="mailto:safwanarif1102009@gmail.com" method="post" enctype="text/plain">
+          <div class="field"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="message">Project details</label><textarea id="message" name="message" required></textarea></div>
+          <button class="button" type="submit">Prepare email</button>
+          <p class="form-note" id="form-note" aria-live="polite">This draft opens your email app. No form data is stored.</p>
+        </form>
       </div>
-    </div>
-    <div class="process-row reveal reveal-delay-1">
-      <div class="process-num">02</div>
-      <div>
-        <div class="process-row-title">I design and build your site</div>
-        <div class="process-row-desc">You'll see progress along the way and can request changes anytime.</div>
-      </div>
-    </div>
-    <div class="process-row reveal reveal-delay-2">
-      <div class="process-num">03</div>
-      <div>
-        <div class="process-row-title">Your website goes live</div>
-        <div class="process-row-desc">I handle getting it online so you can focus on running your business.</div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
+  </main>
 
-<!-- CTA -->
-<div class="cta-section" id="contact">
-  <div class="cta-inner">
-    <p class="section-label reveal" style="color: var(--accent);">Get In Touch</p>
-    <h2 class="cta-title reveal reveal-delay-1">
-      Let's build <span class="highlight">your website</span>
-    </h2>
-    <p class="cta-text reveal reveal-delay-2">
-      Send me a message and let's talk about what your business needs. 
-      Free quote, no pressure.
-    </p>
-    <a href="mailto:safwanarif1102009@gmail.com" class="btn-primary reveal reveal-delay-3">safwanarif1102009@gmail.com</a>
-    <p class="cta-text reveal reveal-delay-3" style="margin-top: 24px; margin-bottom: 0;">
-      Or chat on WhatsApp: <a href="https://wa.me/6737156809" target="_blank" style="color: white; font-weight: 700; text-decoration: underline;">+673 715 6809</a>
-    </p>
-  </div>
-</div>
+  <footer class="shell"><span>&copy; 2026 Safwan</span><a href="mailto:safwanarif1102009@gmail.com">safwanarif1102009@gmail.com</a></footer>
 
-<!-- FOOTER -->
-<footer>
-  <p class="footer-copy">© 2026 — Pixel.bn</p>
-</footer>
+  <script>
+    const topbar = document.querySelector('#topbar');
+    const navLinks = [...document.querySelectorAll('.nav-links a[href^="#"], .mobile-menu a[href^="#"]')];
+    if ('IntersectionObserver' in window) {
+      const marker = document.createElement('span');
+      marker.setAttribute('aria-hidden', 'true');
+      marker.style.cssText = 'position:absolute;top:0;width:1px;height:1px;';
+      document.body.prepend(marker);
+      new IntersectionObserver(([entry]) => topbar.classList.toggle('scrolled', !entry.isIntersecting)).observe(marker);
 
-<script>
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  });
+      document.documentElement.classList.add('reveal-ready');
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: .14 });
+      document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
 
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
+      const sectionObserver = new IntersectionObserver((entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        navLinks.forEach((link) => {
+          const active = link.getAttribute('href') === `#${visible.target.id}`;
+          if (active) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      }, { rootMargin: '-28% 0px -56% 0px', threshold: [0, .2, .5] });
+      document.querySelectorAll('main section[id]').forEach((section) => sectionObserver.observe(section));
+    }
+
+    const mobileMenu = document.querySelector('.mobile-menu');
+    mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => mobileMenu.removeAttribute('open')));
+
+    document.querySelectorAll('.faq-question').forEach((button) => {
+      button.addEventListener('click', () => {
+        const isOpen = button.getAttribute('aria-expanded') === 'true';
+        const answer = document.querySelector(`#${button.getAttribute('aria-controls')}`);
+        button.setAttribute('aria-expanded', String(!isOpen));
+        answer.classList.toggle('open', !isOpen);
+        answer.setAttribute('aria-hidden', String(isOpen));
+      });
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-  reveals.forEach(el => observer.observe(el));
-</script>
+    document.querySelectorAll('.project-visual img').forEach((image) => {
+      const showFallback = () => {
+        image.hidden = true;
+        image.parentElement.classList.add('media-fallback');
+      };
+      if (image.complete && image.naturalWidth === 0) showFallback();
+      else image.addEventListener('error', showFallback, { once: true });
+    });
+
+    document.querySelector('#contact-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const subject = encodeURIComponent(`Website enquiry from ${data.get('name')}`);
+      const body = encodeURIComponent(`${data.get('message')}\n\nReply to: ${data.get('email')}`);
+      window.location.href = `mailto:safwanarif1102009@gmail.com?subject=${subject}&body=${body}`;
+      document.querySelector('#form-note').textContent = 'Your email app should open now.';
+    });
+  </script>
 </body>
 </html>

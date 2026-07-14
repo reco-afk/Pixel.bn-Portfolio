@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Browse the fictional Rumbia menu, inspired by Bruneian and Southeast Asian flavours.">
+  <meta name="theme-color" content="#08110d">
+  <title>Menu | Rumbia</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308110d'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='serif' font-size='34' font-weight='700' fill='%23d39a58'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js'); addEventListener('load', () => document.body?.classList.add('page-ready'), { once: true })</script>
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="menu.js" defer></script>
+</head>
+<body data-page="menu">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="brand" href="index.html" data-transition>Rumbia</a>
+    <nav class="desktop-nav" aria-label="Main menu"><a href="index.html" data-page-link="home" data-transition>Home</a><a href="menu.html" data-page-link="menu" data-transition>Menu</a><a href="reservations.html" data-page-link="reservations" data-transition>Reservations</a><a href="about.html" data-page-link="about" data-transition>About</a><a href="about.html#visit" data-page-link="visit" data-transition>Visit</a></nav>
+    <details class="mobile-menu"><summary>Menu</summary><nav aria-label="Mobile menu"><a href="index.html" data-page-link="home" data-transition>Home</a><a href="menu.html" data-page-link="menu" data-transition>Menu</a><a href="reservations.html" data-page-link="reservations" data-transition>Reservations</a><a href="about.html" data-page-link="about" data-transition>About</a><a href="about.html#visit" data-page-link="visit" data-transition>Visit</a></nav></details>
+    <a class="button button-accent header-reserve" href="reservations.html" data-transition>Reserve</a>
+  </header>
+
+  <main id="main" class="page-enter">
+    <section class="page-hero load-reveal" aria-labelledby="menu-title">
+      <img src="assets/hero-spread.webp" width="1536" height="1024" alt="A Bruneian dining spread with grilled fish, ambuyat and rice" fetchpriority="high">
+      <div class="page-hero-copy"><h1 id="menu-title">Menu</h1><p>Familiar Bruneian flavours share the table with fire, herbs and dishes from across Southeast Asia.</p></div>
+    </section>
+
+    <section class="menu-section shell" aria-label="Restaurant menu">
+      <div class="category-strip-wrap">
+        <div class="category-strip" id="menu-categories" aria-label="Menu categories"></div>
+      </div>
+      <div class="menu-root" id="menu-root" aria-live="polite"><noscript><p>The interactive menu requires JavaScript. Please enable it to browse this fictional menu.</p></noscript></div>
+    </section>
+  </main>
+
+  <footer class="site-footer shell">
+    <div><div class="footer-brand">Rumbia</div><div class="concept-note">Bruneian and Southeast Asian kitchen</div></div>
+    <nav class="footer-nav" aria-label="Footer navigation"><a href="index.html" data-transition>Home</a><a href="reservations.html" data-transition>Reservations</a><a href="about.html" data-transition>About</a><a href="about.html#visit" data-transition>Visit</a></nav>
+    <p class="footer-meta">All dishes, descriptions and prices are fictional portfolio content.</p>
+  </footer>
+
+  <dialog id="dish-dialog" aria-labelledby="dish-dialog-title">
+    <div class="dialog-inner">
+      <button class="dialog-close" type="button" data-dialog-close>Close</button>
+      <div class="dish-dialog-media" hidden><img alt=""></div>
+      <div class="dish-dialog-copy"><h2 id="dish-dialog-title" data-dish-name></h2><p data-dish-description></p><div class="dish-dialog-meta"><span data-dish-dietary></span><strong data-dish-price></strong></div></div>
+    </div>
+  </dialog>
+</body>
+</html>

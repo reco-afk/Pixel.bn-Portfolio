@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Rumbia is a fictional Bruneian and Southeast Asian restaurant concept created for a web-design portfolio.">
+  <meta name="theme-color" content="#08110d">
+  <title>Rumbia | Bruneian and Southeast Asian Kitchen</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308110d'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='serif' font-size='34' font-weight='700' fill='%23d39a58'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js'); addEventListener('load', () => document.body?.classList.add('page-ready'), { once: true })</script>
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="brand" href="index.html" data-transition>Rumbia</a>
+    <nav class="desktop-nav" aria-label="Main menu">
+      <a href="index.html" data-page-link="home" data-transition>Home</a>
+      <a href="menu.html" data-page-link="menu" data-transition>Menu</a>
+      <a href="reservations.html" data-page-link="reservations" data-transition>Reservations</a>
+      <a href="about.html" data-page-link="about" data-transition>About</a>
+      <a href="about.html#visit" data-page-link="visit" data-transition>Visit</a>
+    </nav>
+    <details class="mobile-menu">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile menu">
+        <a href="index.html" data-page-link="home" data-transition>Home</a>
+        <a href="menu.html" data-page-link="menu" data-transition>Menu</a>
+        <a href="reservations.html" data-page-link="reservations" data-transition>Reservations</a>
+        <a href="about.html" data-page-link="about" data-transition>About</a>
+        <a href="about.html#visit" data-page-link="visit" data-transition>Visit</a>
+      </nav>
+    </details>
+    <a class="button button-accent header-reserve" href="reservations.html" data-transition>Reserve</a>
+  </header>
+
+  <main id="main" class="page-enter">
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="hero-main load-reveal">
+        <img src="assets/hero-spread.webp" width="1536" height="1024" alt="A Bruneian dining spread with grilled fish, ambuyat, rice and local vegetables" fetchpriority="high">
+        <div class="hero-copy">
+          <h1 id="home-title">Rumbia</h1>
+          <p>Bruneian comfort and Southeast Asian fire, served after dusk.</p>
+        </div>
+      </div>
+      <div class="hero-rail" aria-label="Explore Rumbia">
+        <a class="rail-link load-reveal" href="menu.html" data-transition>
+          <img src="assets/satay.webp" width="1536" height="1024" alt="Charcoal chicken satay with peanut sauce and rice cakes">
+          <span class="rail-label"><span><small lang="ms">Hidangan</small>Browse the menu</span><span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="rail-link load-reveal" href="reservations.html" data-transition>
+          <img src="assets/interior.webp" width="1537" height="1023" alt="Rumbia's fictional forest-green dining room at night">
+          <span class="rail-label"><span><small lang="ms">Tempahan</small>Reserve a table</span><span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="rail-link load-reveal" href="about.html" data-transition>
+          <img src="assets/ingredients.webp" width="1024" height="1536" alt="Torch ginger, pandan, calamansi, lemongrass and fresh turmeric">
+          <span class="rail-label"><span><small lang="ms">Cerita kami</small>Our story</span><span aria-hidden="true">↗</span></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="editorial-section shell" aria-labelledby="intro-title">
+      <div class="intro-layout" data-reveal>
+        <h2 id="intro-title">Rooted here. Looking across the region.</h2>
+        <div class="intro-copy">
+          <p>Rumbia is a fictional dining room shaped around Bruneian flavours, open-fire cooking and produce found throughout Southeast Asia.</p>
+          <a class="text-link" href="about.html" data-transition>Read our story <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <button class="signature-image gallery-button" type="button" data-reveal data-lightbox="assets/prawns.webp" data-alt="Turmeric coconut prawns with torch ginger and fern tips" data-caption="Udang Lemak Kunyit, one of Rumbia's fictional signatures.">
+        <img src="assets/prawns.webp" width="1536" height="1024" loading="lazy" alt="Turmeric coconut prawns with torch ginger and fern tips">
+      </button>
+    </section>
+
+    <section class="gallery-section shell" aria-labelledby="gallery-title">
+      <header class="gallery-heading" data-reveal>
+        <h2 id="gallery-title">The room, the fire, the ingredients.</h2>
+        <a class="text-link" href="menu.html#sea" data-transition>See the menu <span aria-hidden="true">↗</span></a>
+      </header>
+      <div class="gallery-grid" data-reveal>
+        <button class="gallery-button" type="button" data-lightbox="assets/preparation.webp" data-alt="A chef preparing sambal, calamansi and fresh herbs" data-caption="Preparation is kept close to the ingredients.">
+          <img src="assets/preparation.webp" width="1536" height="1024" loading="lazy" alt="A chef preparing sambal, calamansi and fresh herbs">
+        </button>
+        <button class="gallery-button" type="button" data-lightbox="assets/ingredients.webp" data-alt="Torch ginger, pandan, calamansi and roots on dark green stone" data-caption="A pantry built around brightness, smoke and acidity.">
+          <img src="assets/ingredients.webp" width="1024" height="1536" loading="lazy" alt="Torch ginger, pandan, calamansi and roots on dark green stone">
+        </button>
+        <button class="gallery-button" type="button" data-lightbox="assets/interior.webp" data-alt="An intimate deep-green restaurant dining room" data-caption="Rumbia's imagined evening dining room.">
+          <img src="assets/interior.webp" width="1537" height="1023" loading="lazy" alt="An intimate deep-green restaurant dining room">
+        </button>
+      </div>
+    </section>
+
+    <section class="reservation-cta" aria-labelledby="reservation-cta-title" data-reveal>
+      <img src="assets/interior.webp" width="1537" height="1023" loading="lazy" alt="">
+      <div class="reservation-cta-copy">
+        <h2 id="reservation-cta-title">An evening at Rumbia.</h2>
+        <p>Try the reservation flow. It is a front-end demonstration and does not send a real booking.</p>
+        <a class="button button-accent" href="reservations.html" data-transition>Reserve a table</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer shell">
+    <div><div class="footer-brand">Rumbia</div><div class="concept-note">Bruneian and Southeast Asian kitchen</div></div>
+    <nav class="footer-nav" aria-label="Footer navigation"><a href="menu.html" data-transition>Menu</a><a href="reservations.html" data-transition>Reservations</a><a href="about.html" data-transition>About</a><a href="about.html#visit" data-transition>Visit</a></nav>
+    <p class="footer-meta">Fictional restaurant concept for the Pixel.bn portfolio. No real venue, orders or bookings.</p>
+  </footer>
+
+  <dialog class="image-dialog" id="image-dialog" aria-label="Gallery image">
+    <div class="dialog-inner">
+      <button class="dialog-close" type="button" data-dialog-close>Close</button>
+      <div class="dialog-media"><img src="assets/hero-spread.webp" alt=""></div>
+      <div class="dialog-caption" data-dialog-caption></div>
+    </div>
+  </dialog>
+</body>
+</html>
